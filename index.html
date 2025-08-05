@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" type="image/png" href="download.jpeg" />
+    <title>Ganesh Portfolio</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
+</head>
+<body>
+
+    <div id="curtain-left"></div>
+    <div id="curtain-right"></div>
+
+    <!-- NEW: Lock + Key Animation Container with password field -->
+<div id="unlock-container">
+    <div id="locker">🔒</div>
+    <div id="key">🗝️</div>
+    <div class="password-input-container">
+    <div class="password-wrapper">
+        <input type="password" id="curtainPasskey" placeholder="Enter passkey..." onkeydown="handleCurtainKeydown(event)">
+        <span class="password-toggle" onclick="togglePasswordVisibility('curtainPasskey')">
+            👁️
+        </span>
+    </div>
+    <button onclick="startUnlock()">Unlock</button>
+    <div id="curtainErrorMsg" class="error-msg"></div>
+</div>
+</div>
+
+<!-- NEW: Container for the falling flower animation -->
+<div id="flower-container"></div>
+
+    <div id="chatbot-wrapper" style="display: none;">
+        <button id="smartBtn" onclick="openChatbot()">Smart Work 💡</button>
+        <div class="chatbot-container" id="chatbox">
+            <div class="chat-header">
+                Resume Chatbot
+                <button id="toggleTheme" title="Toggle theme">🌙</button>
+                <button class="chat-close" onclick="closeChatbot()">×</button>
+            </div>
+            <div class="chat-body" id="chat"></div>
+            <div class="chat-input">
+                <input type="text" id="question" placeholder="Ask anything..." disabled />
+                <button onclick="askQuestion()" id="askBtn" disabled>Ask</button>
+            </div>
+        </div>
+    </div>
+    <div id="main-content" style="display: none;">
+        <div class="navbar-video-container">
+            <video autoplay muted loop playsinline class="video-bg">
+                <source src="namebg.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
+            <div class="welcome-text-container">
+                <h1>
+                    Welcome to <span>Alajingi Ganesh</span> Portfolio Website
+                </h1>
+            </div>
+        </div>
+
+        <nav class="nav-links">
+            <a href="#Myself">Myself</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#education">Education</a>
+            <a href="#Contact">Contact Me</a>
+            <a href="#" onclick="promptDownload()">🔐 Download Resume</a>
+        </nav>
+    </div>
+
+    <div id="resumePrompt" class="resume-prompt">
+        <div id="popupBox" class="popup-box">
+            <h3>🔐 Enter Passkey to Download Resume</h3>
+            <input type="password" id="resumeKey" placeholder="Enter passkey..." />
+            <br>
+            <button onclick="verifyKey()">Submit</button>
+            <button onclick="closePrompt()">Cancel</button>
+            <div id="errorMsg" class="error-msg"></div>
+            <div id="successTick">✅</div>
+        </div>
+    </div>
+    <section id="Myself" class="about-section">
+        <div class="bg-glow"></div>
+        <div class="about-content">
+            <div class="profile-pic">
+                <img src="ganesh linkdin 1.jpg" alt="Ganesh">
+            </div>
+            <h2>👋 Hey there!</h2>
+            <p>
+                I'm <strong>Alajingi Ganesh</strong>, a Computer Science undergraduate at IIIT Trichy.<br><br>
+                A quick learner, passionate coder, and innovative thinker — I enjoy building meaningful solutions that combine design and logic.<br><br>
+                Proud member of <strong>GDSC</strong> and <strong>Carrom Club Coordinator</strong>, I'm always eager to learn, lead, and grow.
+            </p>
+        </div>
+    </section>
+    <section id="skills" class="skills-section">
+        <h1>Ganesh's Skill World 🌐</h1>
+        <div class="grid-skills">
+            <div class="skill" data-percent="90" onclick="openModal('Python', 'Advanced level. Used in data analysis and automation.')">
+                <span>Python</span>
+                <div class="bar"><div class="fill"></div></div><span class="tooltip">90%</span>
+            </div>
+            <div class="skill" data-percent="30" onclick="openModal('C++, C, Java', 'Basic understanding for academic use and OOP concepts.')">
+                <span>C++, C, Java</span>
+                <div class="bar"><div class="fill"></div></div><span class="tooltip">30%</span>
+            </div>
+            <div class="skill" data-percent="95" onclick="openModal('HTML', 'Expert in HTML5. Semantic, accessible code.')">
+                <span>HTML</span>
+                <div class="bar"><div class="fill"></div></div><span class="tooltip">95%</span>
+            </div>
+            <div class="skill" data-percent="95" onclick="openModal('CSS', 'Mastered Flexbox, Grid, animations.')">
+                <span>CSS</span>
+                <div class="bar"><div class="fill"></div></div><span class="tooltip">95%</span>
+            </div>
+            <div class="skill" data-percent="90" onclick="openModal('JavaScript', 'Used for frontend interactivity and logic.')">
+                <span>JavaScript</span>
+                <div class="bar"><div class="fill"></div></div><span class="tooltip">90%</span>
+            </div>
+            <div class="skill" data-percent="95" onclick="openModal('Bootstrap', 'Responsive UI design using Bootstrap 5.')">
+                <span>Bootstrap</span>
+                <div class="bar"><div class="fill"></div></div><span class="tooltip">95%</span>
+            </div>
+            <div class="skill" data-percent="70" onclick="openModal('MySQL', 'Used for relational DBMS and CRUD operations.')">
+                <span>MySQL</span>
+                <div class="bar"><div class="fill"></div></div><span class="tooltip">70%</span>
+            </div>
+            <div class="skill" data-percent="80" onclick="openModal('SQL', 'Good at writing complex queries and joins.')">
+                <span>SQL</span>
+                <div class="bar"><div class="fill"></div></div><span class="tooltip">80%</span>
+            </div>
+            <div class="skill" data-percent="50" onclick="openModal('MS Word', 'Used for documentation and reports.')">
+                <span>MS Word</span>
+                <div class="bar"><div class="fill"></div></div><span class="tooltip">50%</span>
+            </div>
+            <div class="skill" data-percent="50" onclick="openModal('Excel', 'Used for data entry and formatting.')">
+                <span>Excel</span>
+                <div class="bar"><div class="fill"></div></div><span class="tooltip">50%</span>
+            </div>
+            <div class="skill" data-percent="90" onclick="openModal('Windows OS', 'Daily use. Comfortable with system operations.')">
+                <span>Windows</span>
+                <div class="bar"><div class="fill"></div></div><span class="tooltip">90%</span>
+            </div>
+            <div class="skill" data-percent="40" onclick="openModal('Linux', 'Basic terminal knowledge. Used Ubuntu/Debian.')">
+                <span>Linux</span>
+                <div class="bar"><div class="fill"></div></div><span class="tooltip">40%</span>
+            </div>
+        </div>
+        <div class="modal" id="skillModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2 id="modal-title">Skill Title</h2>
+                <p id="modal-description">Skill Description</p>
+            </div>
+        </div>
+    </section>
+    <section id="projects" class="projects-section">
+        <h1 class="project-heading">My Projects</h1>
+        <div class="projects-container">
+            <div>
+                <div class="project-box" onclick="openNotebook('notebook1')" style="background-image: url('ecommerce.jpg');">
+                    <a href="https://alajingiganesh.github.io/ecommerce-website/" target="_blank" class="project-link" onclick="event.stopPropagation();">
+                        🔗
+                    </a>
+                </div>
+                <div class="project-title">E-commerce Project</div>
+            </div>
+            <div>
+                <div class="project-box" onclick="openNotebook('notebook2')" style="background-image: url('expense tracker.jpg');">
+                    <a href="https://drive.google.com/drive/folders/1T2NLsAJ7xBF0aM9E6vbG2zvdA1V9wuky?usp=sharing" target="_blank" class="project-link" onclick="event.stopPropagation();">
+                        🔗
+                    </a>
+                </div>
+                <div class="project-title">Expense Tracker</div>
+            </div>
+        </div>
+    </section>
+
+    <div id="notebook1" class="notebook">
+        <div class="close-btn" onclick="closeNotebook('notebook1')">✖</div>
+        <div class="pages" id="pages1">
+            <div class="notebook-page">
+                <h1>E-Commerce Website</h1>
+                <h2>🧭 Objective</h2>
+                <ul class="project-list">
+                    <li>Develop a fully client-side responsive E-Commerce website.</li>
+                    <li>Allow users to explore a wide range of products efficiently.</li>
+                    <li>Enable smooth product Browse with an intuitive UI.</li>
+                    <li>Implement a fast and accurate product search feature.</li>
+                    <li>Provide detailed product information including name, price, and image.</li>
+                    <li>Allow users to add and remove items from a shopping cart.</li>
+                    <li>Use JavaScript and <code>localStorage</code> to persist cart data without backend.</li>
+                    <li>Support checkout process on the same page without reloading.</li>
+                    <li>Offer organized product categories like Men, Women, Kids, Gifts, Others.</li>
+                    <li>Include visual enhancements like high-quality product images and descriptions.</li>
+                    <li>Provide easy product filtering and quick navigation.</li>
+                    <li>Ensure fully mobile-responsive and cross-browser compatible design.</li>
+                    <li>Create glowing animated project cards for visual appeal.</li>
+                    <li>Showcase frontend development skills without server-side logic.</li>
+                    <li>Lay a scalable foundation for future backend integration and real-world deployment.</li>
+                </ul>
+            </div>
+            <div class="notebook-page">
+                <h2>🧩 List of Modules Used</h2>
+                <ul class="project-list">
+                    <li><strong>Frontend Development:</strong> HTML, CSS, and JavaScript used to build all pages and interfaces.</li>
+                    <li><strong>User Interface Design:</strong> Clean and responsive UI for Browse, searching, and viewing products.</li>
+                    <li><strong>Cart Management:</strong> JavaScript used to add, update, and remove items dynamically in the cart.</li>
+                    <li><strong>Product Display Pages:</strong> Each product has a dedicated HTML page with images and descriptions.</li>
+                    <li><strong>Category-wise Browse:</strong> Organized product categories like Men, Women, Kids, Gifts, Others.</li>
+                    <li><strong>Search Functionality:</strong> JavaScript-powered search to find products by name or category.</li>
+                    <li><strong>Data Handling:</strong> Static product data managed via product.json (no backend/database).</li>
+                    <li><strong>Image and Media Assets:</strong> All product and UI images stored locally in structured folders.</li>
+                    <li><strong>Navigation System:</strong> Navbar and footer components used for smooth page transitions.</li>
+                    <li><strong>Local Hosting & Testing:</strong> Can be opened in any browser or run using Live Server extensions (e.g., VS Code Live Server).</li>
+                </ul>
+            </div>
+            <div class="notebook-page">
+                <h2>✅ Functional Requirements</h2>
+                <p>These define what the system should do:</p>
+                <ul class="project-list">
+                    <li><strong>Product Browse:</strong> Users must be able to browse through product categories such as Men, Women, Kids, Gifts, and Others.</li>
+                    <li><strong>Product Detail View:</strong> Clicking on a product redirects users to a dedicated product detail page.</li>
+                    <li><strong>Dynamic Shopping Cart:</strong> Users can add products to a shopping cart.</li>
+                    <li><strong>Search Functionality:</strong> A search bar is available for users to find products by name or keyword.</li>
+                    <li><strong>Navigation Between Pages:</strong> Users can navigate smoothly between Home, Categories, About, Contact, Cart, and Checkout pages.</li>
+                    <li><strong>Checkout View:</strong> Users can proceed to a static Checkout page to review cart items and total cost.</li>
+                    <li><strong>Responsive Design:</strong> The layout adjusts to different screen sizes and devices (desktop, tablet, mobile).</li>
+                </ul>
+                <h2>✅ Non-Functional Requirements</h2>
+                <p>These define how well the system performs:</p>
+                <ul class="project-list">
+                    <li><strong>Performance:</strong> The website should load quickly and respond to user interactions (like cart updates and search) within 1–2 seconds.</li>
+                    <li><strong>Usability:</strong> The interface is clean, simple, and intuitive, allowing users to browse, search, and manage their cart with ease.</li>
+                    <li><strong>Portability:</strong> The system is fully browser-based and can run on any modern device with a web browser.</li>
+                    <li><strong>Security:</strong> No login or sensitive data is collected, minimizing security risks.</li>
+                    <li><strong>Maintainability:</strong> The codebase is organized into clearly structured folders (like <code>categories/</code>, <code>components/</code>, etc.).</li>
+                    <li><strong>Reliability:</strong> Since it’s a static site with no backend, there are fewer points of failure.</li>
+                    <li><strong>Scalability (Limited):</strong> New product pages or categories can be easily added by duplicating templates and updating data in <code>product.json</code> (if used).</li>
+                </ul>
+            </div>
+            <div class="notebook-page">
+                <h2>Limitations of the Project</h2>
+                <ul class="project-list">
+                    <li><strong>No Backend Integration:</strong> The site is purely frontend-based with no support for real-time database or user login features.</li>
+                    <li><strong>No Payment Gateway:</strong> Checkout is static — there is no integration with real-world payment systems like Razorpay or Stripe.</li>
+                    <li><strong>No Order History:</strong> Users cannot view previous orders or receive confirmation since there’s no server or database handling transactions.</li>
+                    <li><strong>Static Product Data:</strong> All product details are hardcoded or stored in static JSON. There's no dynamic product management or inventory system.</li>
+                    <li><strong>Limited Security:</strong> No user authentication or data encryption, as it doesn’t handle any personal/user-sensitive information.</li>
+                    <li><strong>No Admin Panel:</strong> There’s no backend dashboard to add or remove products dynamically. Everything must be edited manually.</li>
+                    <li><strong>Limited Scalability:</strong> While new products can be added manually, there’s no CMS or auto-generated product pages.</li>
+                    <li><strong>No Cart Persistence after Checkout:</strong> Cart is cleared on checkout but doesn’t generate or store any invoice or summary.</li>
+                </ul>
+            </div>
+            <div class="notebook-page">
+                <h2>Page 5: UML Diagrams</h2>
+                <img src="class diagram.jpg" alt="Class Diagram" class="notebook-image" />
+                <img src="sequnce diagram.jpg" alt="Sequence Diagram" class="notebook-image" />
+            </div>
+            <div class="notebook-page">
+                <h2>Page 6: Website Screenshots</h2>
+                <img src="home ecommerce.jpeg" alt="E-Commerce Home Page" class="notebook-image" />
+                <img src="product ecommerce.jpeg" alt="E-Commerce Product Page" class="notebook-image" />
+            </div>
+        </div>
+        <button class="prev-btn" onclick="changePage('pages1', -1)">Prev</button>
+        <button class="next-btn" onclick="changePage('pages1', 1)">Next</button>
+    </div>
+
+    <div id="notebook2" class="notebook">
+        <div class="close-btn" onclick="closeNotebook('notebook2')">✖</div>
+        <div class="pages" id="pages2">
+            <div class="notebook-page">
+                <h2>Expense Tracker - Page 1: Objective</h2>
+                <ul class="project-list">
+                    <li>To build a simple, user-friendly platform for managing personal income and expenses.</li>
+                    <li>Allow users to record daily transactions and categorize them effectively.</li>
+                    <li>Enable automatic calculation and display of balance, total income, and expenses.</li>
+                    <li>Provide monthly financial summaries to support better budgeting.</li>
+                    <li>Ensure each user’s data is secure and isolated using session-based login.</li>
+                    <li>Support features like editing, deleting, and filtering of transactions.</li>
+                    <li>Design the system to be responsive and work on multiple devices.</li>
+                    <li>Minimize backend complexity while ensuring accurate and consistent data management.</li>
+                    <li>Enhance financial discipline by helping users track and visualize their spending habits.</li>
+                </ul>
+            </div>
+            <div class="notebook-page">
+                <h2>Page 2: Features</h2>
+                <ul class="project-list">
+                    <li><strong>Login System:</strong> Secure login with session tracking to protect user data.</li>
+                    <li><strong>Income Entry:</strong> Users can input income with date, amount, and source.</li>
+                    <li><strong>Expense Entry:</strong> Add expense details with category, amount, and purpose.</li>
+                    <li><strong>Transaction Management:</strong> Edit, delete, and update transaction records easily.</li>
+                    <li><strong>Dashboard View:</strong> Summarized view of balance, income, and expenses.</li>
+                    <li><strong>Monthly Report:</strong> View categorized monthly summaries of expenses and income.</li>
+                    <li><strong>Category Filtering:</strong> Quickly filter records by category like food, rent, travel, etc.</li>
+                    <li><strong>Password Change:</strong> Update password using form with validation.</li>
+                    <li><strong>Responsive Layout:</strong> Accessible and usable on mobile, tablet, and desktop.</li>
+                    <li><strong>User Feedback:</strong> Error messages and success alerts provided after actions.</li>
+                </ul>
+            </div>
+            <div class="notebook-page">
+                <h2>Page 3: Tools Used</h2>
+                <ul class="project-list">
+                    <li><strong>HTML5:</strong> Used to create the basic structure and layout of web pages.</li>
+                    <li><strong>CSS3:</strong> Styling for UI design, form controls, dashboard layout, and responsiveness.</li>
+                    <li><strong>JavaScript:</strong> Dynamic behavior for forms, validation, and interactivity.</li>
+                    <li><strong>PHP:</strong> Server-side logic for handling user login, data insertion, updates, etc.</li>
+                    <li><strong>MySQL:</strong> Database for storing users, income, expense records.</li>
+                    <li><strong>XAMPP:</strong> Local web server used for development and testing.</li>
+                    <li><strong>Sessions:</strong> PHP sessions used to store login info and restrict access.</li>
+                    <li><strong>VS Code:</strong> Main editor used for writing and managing code.</li>
+                    <li><strong>File Structure:</strong> Organized directories for PHP files, assets, and modules.</li>
+                </ul>
+            </div>
+            <div class="notebook-page">
+                <h2>Page 4: Functional Requirements</h2>
+                <ul class="project-list">
+                    <li><strong>User Login:</strong> Secure login with validation and session-based access control.</li>
+                    <li><strong>Transaction Input:</strong> Add income and expense records with relevant details.</li>
+                    <li><strong>Transaction Update:</strong> Edit or delete previous records from the dashboard.</li>
+                    <li><strong>Dashboard View:</strong> Visual summary of income, expense, and balance in real time.</li>
+                    <li><strong>Category-Based Filtering:</strong> Sort records by categories (like Food, Travel, Rent).</li>
+                    <li><strong>Monthly Reports:</strong> View expense/income records based on month or date range.</li>
+                    <li><strong>Password Management:</strong> Allow users to change password securely.</li>
+                    <li><strong>Logout:</strong> Proper logout mechanism to end sessions and secure data.</li>
+                    <li><strong>Error Handling:</strong> Show user-friendly error messages on invalid input.</li>
+                    <li><strong>Navigation:</strong> Smooth transitions between login, dashboard, entry forms, and reports.</li>
+                </ul>
+            </div>
+            <div class="notebook-page">
+                <h2>Page 5: UML Diagrams</h2>
+                <img src="architecture pet.jpeg" alt="Class Diagram" class="notebook-image" />
+                <img src="er pet.jpeg" alt="Sequence Diagram" class="notebook-image" />
+            </div>
+            <div class="notebook-page">
+                <h2>Page 6: Website Screenshots</h2>
+                <img src="class pet.jpeg" alt="E-Commerce Home Page" class="notebook-image" />
+                <img src="home pet.jpeg" alt="E-Commerce Product Page" class="notebook-image" />
+            </div>
+        </div>
+        <button class="prev-btn" onclick="changePage('pages2', -1)">Prev</button>
+        <button class="next-btn" onclick="changePage('pages2', 1)">Next</button>
+    </div>
+    <section id="education" class="education-section">
+        <h2>🎓 My Education</h2>
+        <p>Click on any card to explore details!</p>
+
+        <div class="edu-card" onclick="openEduPopup('school')">
+            <h3>🧮 School (SSC)</h3>
+            <h4>Sri Vijaya Bharathi High School</h4>
+            <p>Completed in 2020 | CGPA: 9.8/10</p>
+        </div>
+        <div class="edu-card" onclick="openEduPopup('inter')">
+            <h3>📐 Intermediate (MPC)</h3>
+            <h4>Sri Chaitanya Junior Kalasala</h4>
+            <p>Completed in 2022 | Marks: 939/1000</p>
+        </div>
+        <div class="edu-card" onclick="openEduPopup('btech')">
+            <h3>💻 B.Tech – Computer Science</h3>
+            <h4>Indian Institute Of Information Technology Tiruchirappalli</h4>
+            <p>2022 – 2026 | Current CGPA: 7.0</p>
+        </div>
+    </section>
+
+    <div class="edu-popup" id="eduPopup">
+        <div class="edu-popup-content" id="eduPopupContent">
+            <button class="popup-close" onclick="closeEduPopup()">×</button>
+        </div>
+    </div>
+    <div id="imagePopup" onclick="closeImagePopup(event)">
+        <div id="imagePopupContent">
+            <img id="popupImage" src="" alt="Preview" />
+            <button id="closePopupBtn" onclick="closeImagePopup(event)">×</button>
+        </div>
+    </div>
+    <section id="Contact" class="contact-section">
+        <h2>📬 Contact Me</h2>
+        <p>
+            I’m a passionate learner, open to opportunities and collaboration.<br>
+            Let’s connect and build something exciting together!
+        </p>
+
+        <div class="contact-info-container">
+            <div class="contact-card" onclick="triggerContact('📧','mailto:ganeshalajingi123@gmail.com')">
+                <div>📧</div>
+                <h4>Email</h4>
+                <p>ganeshalajingi123@gmail.com</p>
+            </div>
+            <div class="contact-card">
+                <div>📍</div>
+                <h4>Location</h4>
+                <p>Hyderabad, India</p>
+            </div>
+            <div class="contact-card" onclick="triggerContact('📞','tel:+917330767553')">
+                <div>📞</div>
+                <h4>Phone</h4>
+                <p>+91 73307 67553</p>
+            </div>
+        </div>
+
+        <form id="contactForm" onsubmit="handleSubmit(event)" class="contact-form">
+            <input type="text" name="name" placeholder="Your Name" required />
+            <input type="email" name="email" placeholder="Your Email" required />
+            <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+            <button type="submit">Let's Connect 🚀</button>
+        </form>
+
+        <div id="popupOverlay" class="popup-overlay">
+            <div id="thankYouPopup" class="popup-container">
+                <span class="close-btn" onclick="closePopup()">×</span>
+                <div class="popup-video">
+                    <video width="100%" autoplay muted loop>
+                        <source src="Thankyou.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <h2>Thanks for connecting to <span>Alajingi Ganesh</span>!</h2>
+                <p>Ganesh will contact you shortly. Have a great day!</p>
+            </div>
+        </div>
+    </section>
+    <button id="scrollTopBtn" title="Back to Top">⤴</button>
+    <footer>
+        <div class="social-icons">
+            <a href="https://github.com/AlajingiGanesh" target="_blank" title="GitHub" class="footer-icon">🐙</a>
+            <a href="https://linkedin.com/in/alajingiganesh" target="_blank" title="LinkedIn" class="footer-icon">🔗</a>
+            <a href="mailto:ganeshalajingi123@gmail.com" title="Email" class="footer-icon">✉️</a>
+            <a href="https://www.facebook.com/profile.php?id=100080448969400" target="_blank" title="Facebook" class="footer-icon">📘</a>
+            <a href="https://www.instagram.com/reel/C-FoNLhudiD/?igsh=MWJtbDNkbnBtcHlnbg==" target="_blank" title="Instagram" class="footer-icon">📸</a>
+        </div>
+        <p>&copy; 2025 <strong>Alajingi Ganesh</strong> — All rights reserved.</p>
+        <button onclick="scrollToTop()" title="Back to Top" class="footer-scroll-btn">☝️</button>
+    </footer>
+    <script src="script.js"></script>
+
+</body>
+</html>
