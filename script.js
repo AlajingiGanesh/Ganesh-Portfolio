@@ -132,7 +132,7 @@ async function loadResume() {
         resumeText = text;
         document.getElementById("question").disabled = false;
         document.getElementById("askBtn").disabled = false;
-        appendMessage("Bot", "Resume loaded. Ask me anything about Alajingi Ganesh.");
+        appendMessage("Bot", "Hello ! Ask me anything about Alajingi Ganesh.");
         document.getElementById("question").focus();
     } catch (e) {
         appendMessage("Bot", "Error loading resume. Please ensure 'resume.pdf' is in the same directory.");
