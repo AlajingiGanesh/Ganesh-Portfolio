@@ -10,51 +10,33 @@
 function startUnlock() {
     const key = document.getElementById("key");
     const locker = document.getElementById("locker");
-    const passkeyInput = document.getElementById("curtainPasskey");
-    const errorMsg = document.getElementById("curtainErrorMsg");
     const unlockContainer = document.getElementById("unlock-container");
 
-    const correctPasskey = "cherry"; // <--- CHANGE THIS TO YOUR DESIRED PASSWORD
+    // Move key to lock animation
+    key.style.top = "-60px";
+    key.style.transform = "rotate(720deg)";
 
-    if (passkeyInput.value.toLowerCase() === correctPasskey) {
-        errorMsg.style.display = "none";
-        unlockContainer.classList.remove("fade-error");
+    // Change lock emoji after key reaches it
+    setTimeout(() => {
+        locker.innerText = "🔓";
+    }, 1000);
 
-        // Move key up to lock
-        key.style.top = "-60px";
-        key.style.transform = "rotate(720deg)";
+    // Open curtains, show content, and start flower animation
+    setTimeout(() => {
+        document.getElementById("curtain-left").style.transform = "translateX(-100%)";
+        document.getElementById("curtain-right").style.transform = "translateX(100%)";
+        unlockContainer.style.display = "none";
+        document.getElementById("chatbot-wrapper").style.display = "block";
+        document.getElementById("main-content").style.display = "block";
+        document.body.style.overflow = "auto";
+        window.scrollTo({ top: 0, behavior: "smooth" });
 
-        // Change lock emoji after key reaches it
         setTimeout(() => {
-            locker.innerText = "🔓";
-        }, 1000);
-
-        // Open curtains, show content, scroll to top, then start flowers
-        setTimeout(() => {
-            document.getElementById("curtain-left").style.transform = "translateX(-100%)";
-            document.getElementById("curtain-right").style.transform = "translateX(100%)";
-            unlockContainer.style.display = "none";
-            document.getElementById("chatbot-wrapper").style.display = "block";
-
-            // Show main content and scroll to top immediately after curtain opens
-            document.getElementById("main-content").style.display = "block";
-            document.body.style.overflow = "auto";
-            window.scrollTo({ top: 0, behavior: "smooth" });
-
-            // Start flower animation 2 seconds after unlock
-            setTimeout(() => {
-                createFlowers();
-            }, 2000);
-
-        }, 1600);
-
-    } else {
-        errorMsg.innerText = "❌ Incorrect passkey!";
-        errorMsg.style.display = "block";
-        unlockContainer.classList.add("fade-error");
-        setTimeout(() => unlockContainer.classList.remove("fade-error"), 500);
-    }
+            createFlowers();
+        }, 2000);
+    }, 1600);
 }
+
 /* NEW: Handle 'Enter' key press on the password input field */
 function handleCurtainKeydown(event) {
     if (event.key === 'Enter') {
@@ -303,32 +285,36 @@ function verifyKey() {
 /* === SKILL SECTION MODAL & ANIMATION LOGIC === */
 /* ================================================================= */
 
-// Animate bars
-document.addEventListener("DOMContentLoaded", () => {
-    const skills = document.querySelectorAll(".skill");
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const fill = entry.target.querySelector(".fill");
-                const percent = entry.target.getAttribute("data-percent");
-                fill.style.width = percent + "%";
-            }
-        });
-    }, { threshold: 0.4 });
 
-    skills.forEach(skill => observer.observe(skill));
-});
 
-// Modal logic
-function openModal(title, description) {
-    document.getElementById("modal-title").innerText = title;
-    document.getElementById("modal-description").innerText = description;
-    document.getElementById("skillModal").style.display = "block";
+function openModal(title, description, event) {
+    const modal = document.getElementById("skillModal");
+    const modalTitle = document.getElementById("modal-title");
+    const modalDescription = document.getElementById("modal-description");
+
+    modalTitle.textContent = title;
+    modalDescription.textContent = description;
+
+    // Position near clicked skill
+    const rect = event.target.getBoundingClientRect();
+    modal.style.top = (window.scrollY + rect.top + rect.height + 10) + "px";
+    modal.style.left = (window.scrollX + rect.left) + "px";
+
+    modal.style.display = "block";
 }
 
 function closeModal() {
     document.getElementById("skillModal").style.display = "none";
 }
+
+function openSkillPopup() {
+    document.getElementById("skills-popup").style.display = "flex";
+}
+
+function closeSkillPopup() {
+    document.getElementById("skills-popup").style.display = "none";
+}
+
 
 
 /* ================================================================= */
@@ -428,6 +414,23 @@ function closeImagePopup(event) {
         document.getElementById("imagePopup").style.display = "none";
         document.getElementById("popupImage").src = "";
     }
+}
+
+
+
+
+/* ================================================================= */
+/* === Certificate SECTION LOGIC === */
+/* ================================================================= */
+
+
+function openCertificate(fileSrc) {
+    document.getElementById("certificate-file").src = fileSrc;
+    document.getElementById("certificate-popup").style.display = "flex";
+}
+
+function closeCertificatePopup() {
+    document.getElementById("certificate-popup").style.display = "none";
 }
 
 

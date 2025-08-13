@@ -20,19 +20,10 @@
 
     <!-- NEW: Lock + Key Animation Container with password field -->
 <div id="unlock-container">
-    <div id="locker">🔒</div>
-    <div id="key">🗝️</div>
-    <div class="password-input-container">
-    <div class="password-wrapper">
-        <input type="password" id="curtainPasskey" placeholder="Enter passkey..." onkeydown="handleCurtainKeydown(event)">
-        <span class="password-toggle" onclick="togglePasswordVisibility('curtainPasskey')">
-            👁️
-        </span>
-    </div>
-    <button onclick="startUnlock()">Unlock</button>
-    <div id="curtainErrorMsg" class="error-msg"></div>
+    <div id="locker" tabindex="0" onclick="startUnlock()">🔒 Letsgo</div>
+    <div id="key" onclick="startUnlock()">🗝️</div>
 </div>
-</div>
+
 
 <!-- NEW: Container for the falling flower animation -->
 <div id="flower-container"></div>
@@ -70,6 +61,7 @@
             <a href="#Myself">Myself</a>
             <a href="#skills">Skills</a>
             <a href="#projects">Projects</a>
+            <a href="#certificate">Certificates</a>
             <a href="#education">Education</a>
             <a href="#Contact">Contact Me</a>
             <a href="#" onclick="promptDownload()">🔐 Download Resume</a>
@@ -101,66 +93,78 @@
             </p>
         </div>
     </section>
-    <section id="skills" class="skills-section">
-        <h1>Ganesh's Skill World 🌐</h1>
-        <div class="grid-skills">
-            <div class="skill" data-percent="90" onclick="openModal('Python', 'Advanced level. Used in data analysis and automation.')">
-                <span>Python</span>
-                <div class="bar"><div class="fill"></div></div><span class="tooltip">90%</span>
-            </div>
-            <div class="skill" data-percent="30" onclick="openModal('C++, C, Java', 'Basic understanding for academic use and OOP concepts.')">
-                <span>C++, C, Java</span>
-                <div class="bar"><div class="fill"></div></div><span class="tooltip">30%</span>
-            </div>
-            <div class="skill" data-percent="95" onclick="openModal('HTML', 'Expert in HTML5. Semantic, accessible code.')">
-                <span>HTML</span>
-                <div class="bar"><div class="fill"></div></div><span class="tooltip">95%</span>
-            </div>
-            <div class="skill" data-percent="95" onclick="openModal('CSS', 'Mastered Flexbox, Grid, animations.')">
-                <span>CSS</span>
-                <div class="bar"><div class="fill"></div></div><span class="tooltip">95%</span>
-            </div>
-            <div class="skill" data-percent="90" onclick="openModal('JavaScript', 'Used for frontend interactivity and logic.')">
-                <span>JavaScript</span>
-                <div class="bar"><div class="fill"></div></div><span class="tooltip">90%</span>
-            </div>
-            <div class="skill" data-percent="95" onclick="openModal('Bootstrap', 'Responsive UI design using Bootstrap 5.')">
-                <span>Bootstrap</span>
-                <div class="bar"><div class="fill"></div></div><span class="tooltip">95%</span>
-            </div>
-            <div class="skill" data-percent="70" onclick="openModal('MySQL', 'Used for relational DBMS and CRUD operations.')">
-                <span>MySQL</span>
-                <div class="bar"><div class="fill"></div></div><span class="tooltip">70%</span>
-            </div>
-            <div class="skill" data-percent="80" onclick="openModal('SQL', 'Good at writing complex queries and joins.')">
-                <span>SQL</span>
-                <div class="bar"><div class="fill"></div></div><span class="tooltip">80%</span>
-            </div>
-            <div class="skill" data-percent="50" onclick="openModal('MS Word', 'Used for documentation and reports.')">
-                <span>MS Word</span>
-                <div class="bar"><div class="fill"></div></div><span class="tooltip">50%</span>
-            </div>
-            <div class="skill" data-percent="50" onclick="openModal('Excel', 'Used for data entry and formatting.')">
-                <span>Excel</span>
-                <div class="bar"><div class="fill"></div></div><span class="tooltip">50%</span>
-            </div>
-            <div class="skill" data-percent="90" onclick="openModal('Windows OS', 'Daily use. Comfortable with system operations.')">
-                <span>Windows</span>
-                <div class="bar"><div class="fill"></div></div><span class="tooltip">90%</span>
-            </div>
-            <div class="skill" data-percent="40" onclick="openModal('Linux', 'Basic terminal knowledge. Used Ubuntu/Debian.')">
-                <span>Linux</span>
-                <div class="bar"><div class="fill"></div></div><span class="tooltip">40%</span>
+
+
+
+
+
+<section id="skills" class="skills-section">
+    <h1 class="skills-heading">Ganesh's Skill World 🌐</h1>
+
+    <div class="grid-skills">
+        <div class="skill-box"
+            onclick="openModal('Python', 'Advanced level. Used in data analysis and automation.', event)">Python</div>
+        <div class="skill-box"
+            onclick="openModal('C++, C, Java', 'Basic understanding for academic use and OOP concepts.', event)">C++, C,
+            Java</div>
+        <div class="skill-box" onclick="openModal('HTML', 'Expert in HTML5. Semantic, accessible code.', event)">HTML
+        </div>
+        <div class="skill-box" onclick="openModal('CSS', 'Mastered Flexbox, Grid, animations.', event)">CSS</div>
+        <div class="skill-box" onclick="openModal('JavaScript', 'Used for frontend interactivity and logic.', event)">
+            JavaScript</div>
+        <div class="skill-box" onclick="openModal('Bootstrap', 'Responsive UI design using Bootstrap 5.', event)">
+            Bootstrap</div>
+        <div class="skill-box" onclick="openModal('MySQL', 'Used for relational DBMS and CRUD operations.', event)">
+            MySQL</div>
+        <div class="skill-box" onclick="openModal('SQL', 'Good at writing complex queries and joins.', event)">SQL</div>
+        <div class="skill-box" onclick="openModal('MS Word', 'Used for documentation and reports.', event)">MS Word
+        </div>
+        <div class="skill-box" onclick="openModal('Excel', 'Used for data entry and formatting.', event)">Excel</div>
+        <div class="skill-box" onclick="openModal('Windows', 'Daily use. Comfortable with system operations.', event)">
+            Windows</div>
+        <div class="skill-box" onclick="openModal('Linux', 'Basic terminal knowledge. Used Ubuntu/Debian.', event)">
+            Linux</div>
+
+        <!-- More option -->
+        <div class="skill-box more-btn" onclick="openSkillPopup()">+ More</div>
+    </div>
+
+    <!-- Small popup -->
+    <div class="modal" id="skillModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modal-title">Skill Title</h2>
+            <p id="modal-description">Skill Description</p>
+        </div>
+    </div>
+
+    <!-- Large popup for all skills -->
+    <div id="skills-popup" class="skills-popup">
+        <div class="skills-popup-content">
+            <span class="close-popup" onclick="closeSkillPopup()">&times;</span>
+            <h2>All Skills</h2>
+            <div class="skills-popup-grid">
+                <div class="skill-box">Python</div>
+                <div class="skill-box">C++, C, Java</div>
+                <div class="skill-box">HTML</div>
+                <div class="skill-box">CSS</div>
+                <div class="skill-box">JavaScript</div>
+                <div class="skill-box">Bootstrap</div>
+                <div class="skill-box">MySQL</div>
+                <div class="skill-box">SQL</div>
+                <div class="skill-box">MS Word</div>
+                <div class="skill-box">Excel</div>
+                <div class="skill-box">Windows</div>
+                <div class="skill-box">Linux</div>
             </div>
         </div>
-        <div class="modal" id="skillModal">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal()">&times;</span>
-                <h2 id="modal-title">Skill Title</h2>
-                <p id="modal-description">Skill Description</p>
-            </div>
-        </div>
-    </section>
+    </div>
+</section>
+
+
+
+
+
     <section id="projects" class="projects-section">
         <h1 class="project-heading">My Projects</h1>
         <div class="projects-container">
@@ -381,6 +385,43 @@
             <button id="closePopupBtn" onclick="closeImagePopup(event)">×</button>
         </div>
     </div>
+
+
+
+
+
+
+
+<section id="certificate" class="certificates-section">
+    <h1 class="certificates-heading">Certificates of Alajingi Ganesh</h1>
+
+    <div class="certificates-grid">
+        <div class="certificate-card" onclick="openCertificate('certificates/summer Internship.pdf')">Web Development Inernship
+            Certification</div>
+        <div class="certificate-card" onclick="openCertificate('certificates/besant.pdf')">Java (besant Technology)
+            Certification</div>
+        <div class="certificate-card" onclick="openCertificate('certificates/Cloud Computing.pdf')">Cloud Computing(NPTL)
+        </div>
+        <div class="certificate-card" onclick="openCertificate('certificates/Data Analytics with Python.pdf')">Data Analytics with Python(NPTL)
+        </div>
+        <div class="certificate-card" onclick="openCertificate('certificates/icat.pdf')">Participation ICAT exam</div>
+        <div class="certificate-card" onclick="openCertificate('certificates/codsoft.pdf')">cod soft offer letter</div>
+    </div>
+
+    <!-- Certificate Popup -->
+    <div id="certificate-popup" class="certificate-popup">
+        <div class="certificate-popup-content">
+            <span class="close-popup" onclick="closeCertificatePopup()">&times;</span>
+            <embed id="certificate-file" src="" type="application/pdf" width="100%" height="100%">
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
     <section id="Contact" class="contact-section">
         <h2>📬 Contact Me</h2>
         <p>
