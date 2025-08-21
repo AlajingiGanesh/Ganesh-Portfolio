@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="download.jpeg" />
     <title>Ganesh Portfolio</title>
 
@@ -13,20 +14,22 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
 </head>
+
 <body>
 
     <div id="curtain-left"></div>
     <div id="curtain-right"></div>
 
-    <!-- NEW: Lock + Key Animation Container with password field -->
 <div id="unlock-container">
-    <div id="locker" tabindex="0" onclick="startUnlock()">🔒 Letsgo</div>
+    <div id="locker" tabindex="0" onclick="startUnlock()">🔒</div>
+    <div class="tap-msg" onclick="startUnlock()">Tap</div>
     <div id="key" onclick="startUnlock()">🗝️</div>
 </div>
 
 
-<!-- NEW: Container for the falling flower animation -->
-<div id="flower-container"></div>
+
+
+    <div id="flower-container"></div>
 
     <div id="chatbot-wrapper" style="display: none;">
         <button id="smartBtn" onclick="openChatbot()">Smart Search 💡</button>
@@ -43,6 +46,7 @@
             </div>
         </div>
     </div>
+
     <div id="main-content" style="display: none;">
         <div class="navbar-video-container">
             <video autoplay muted loop playsinline class="video-bg">
@@ -79,6 +83,7 @@
             <div id="successTick">✅</div>
         </div>
     </div>
+
     <section id="Myself" class="about-section">
         <div class="bg-glow"></div>
         <div class="about-content">
@@ -88,97 +93,99 @@
             <h2>👋 Hey there!</h2>
             <p>
                 I'm <strong>Alajingi Ganesh</strong>, a Computer Science undergraduate at IIIT Trichy.<br><br>
-                A quick learner, passionate coder, and innovative thinker — I enjoy building meaningful solutions that combine design and logic.<br><br>
-                Proud member of <strong>GDSC</strong> and <strong>Carrom Club Coordinator</strong>, I'm always eager to learn, lead, and grow.
+                A quick learner, passionate coder, and innovative thinker — I enjoy building meaningful solutions that
+                combine design and logic.<br><br>
+                Proud member of <strong>GDSC</strong> and <strong>Carrom Club Coordinator</strong>, I'm always eager to
+                learn, lead, and grow.
             </p>
         </div>
     </section>
 
+    <section id="skills" class="skills-section">
+        <h1 class="skills-heading">Ganesh's Skill World 🌐</h1>
 
+        <div class="grid-skills">
+            <div class="skill-box"
+                onclick="openModal('Python', 'Advanced level. Used in data analysis and automation.', event)">Python
+            </div>
+            <div class="skill-box"
+                onclick="openModal('C++, C, Java', 'Basic understanding for academic use and OOP concepts.', event)">
+                C++, C,
+                Java</div>
+            <div class="skill-box" onclick="openModal('HTML', 'Expert in HTML5. Semantic, accessible code.', event)">
+                HTML
+            </div>
+            <div class="skill-box" onclick="openModal('CSS', 'Mastered Flexbox, Grid, animations.', event)">CSS</div>
+            <div class="skill-box"
+                onclick="openModal('JavaScript', 'Used for frontend interactivity and logic.', event)">
+                JavaScript</div>
+            <div class="skill-box" onclick="openModal('Bootstrap', 'Responsive UI design using Bootstrap 5.', event)">
+                Bootstrap</div>
+            <div class="skill-box" onclick="openModal('MySQL', 'Used for relational DBMS and CRUD operations.', event)">
+                MySQL</div>
+            <div class="skill-box" onclick="openModal('SQL', 'Good at writing complex queries and joins.', event)">SQL
+            </div>
+            <div class="skill-box" onclick="openModal('MS Word', 'Used for documentation and reports.', event)">MS Word
+            </div>
+            <div class="skill-box" onclick="openModal('Excel', 'Used for data entry and formatting.', event)">Excel
+            </div>
+            <div class="skill-box"
+                onclick="openModal('Windows', 'Daily use. Comfortable with system operations.', event)">
+                Windows</div>
+            <div class="skill-box" onclick="openModal('Linux', 'Basic terminal knowledge. Used Ubuntu/Debian.', event)">
+                Linux</div>
 
-
-
-<section id="skills" class="skills-section">
-    <h1 class="skills-heading">Ganesh's Skill World 🌐</h1>
-
-    <div class="grid-skills">
-        <div class="skill-box"
-            onclick="openModal('Python', 'Advanced level. Used in data analysis and automation.', event)">Python</div>
-        <div class="skill-box"
-            onclick="openModal('C++, C, Java', 'Basic understanding for academic use and OOP concepts.', event)">C++, C,
-            Java</div>
-        <div class="skill-box" onclick="openModal('HTML', 'Expert in HTML5. Semantic, accessible code.', event)">HTML
+            <div class="skill-box more-btn" onclick="openSkillPopup()">+ More</div>
         </div>
-        <div class="skill-box" onclick="openModal('CSS', 'Mastered Flexbox, Grid, animations.', event)">CSS</div>
-        <div class="skill-box" onclick="openModal('JavaScript', 'Used for frontend interactivity and logic.', event)">
-            JavaScript</div>
-        <div class="skill-box" onclick="openModal('Bootstrap', 'Responsive UI design using Bootstrap 5.', event)">
-            Bootstrap</div>
-        <div class="skill-box" onclick="openModal('MySQL', 'Used for relational DBMS and CRUD operations.', event)">
-            MySQL</div>
-        <div class="skill-box" onclick="openModal('SQL', 'Good at writing complex queries and joins.', event)">SQL</div>
-        <div class="skill-box" onclick="openModal('MS Word', 'Used for documentation and reports.', event)">MS Word
-        </div>
-        <div class="skill-box" onclick="openModal('Excel', 'Used for data entry and formatting.', event)">Excel</div>
-        <div class="skill-box" onclick="openModal('Windows', 'Daily use. Comfortable with system operations.', event)">
-            Windows</div>
-        <div class="skill-box" onclick="openModal('Linux', 'Basic terminal knowledge. Used Ubuntu/Debian.', event)">
-            Linux</div>
 
-        <!-- More option -->
-        <div class="skill-box more-btn" onclick="openSkillPopup()">+ More</div>
-    </div>
-
-    <!-- Small popup -->
-    <div class="modal" id="skillModal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 id="modal-title">Skill Title</h2>
-            <p id="modal-description">Skill Description</p>
-        </div>
-    </div>
-
-    <!-- Large popup for all skills -->
-    <div id="skills-popup" class="skills-popup">
-        <div class="skills-popup-content">
-            <span class="close-popup" onclick="closeSkillPopup()">&times;</span>
-            <h2>All Skills</h2>
-            <div class="skills-popup-grid">
-                <div class="skill-box">Python</div>
-                <div class="skill-box">C++, C, Java</div>
-                <div class="skill-box">HTML</div>
-                <div class="skill-box">CSS</div>
-                <div class="skill-box">JavaScript</div>
-                <div class="skill-box">Bootstrap</div>
-                <div class="skill-box">MySQL</div>
-                <div class="skill-box">SQL</div>
-                <div class="skill-box">MS Word</div>
-                <div class="skill-box">Excel</div>
-                <div class="skill-box">Windows</div>
-                <div class="skill-box">Linux</div>
+        <div class="modal" id="skillModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2 id="modal-title">Skill Title</h2>
+                <p id="modal-description">Skill Description</p>
             </div>
         </div>
-    </div>
-</section>
 
-
-
-
+        <div id="skills-popup" class="skills-popup">
+            <div class="skills-popup-content">
+                <span class="close-popup" onclick="closeSkillPopup()">&times;</span>
+                <h2>All Skills</h2>
+                <div class="skills-popup-grid">
+                    <div class="skill-box">Python</div>
+                    <div class="skill-box">C++, C, Java</div>
+                    <div class="skill-box">HTML</div>
+                    <div class="skill-box">CSS</div>
+                    <div class="skill-box">JavaScript</div>
+                    <div class="skill-box">Bootstrap</div>
+                    <div class="skill-box">MySQL</div>
+                    <div class="skill-box">SQL</div>
+                    <div class="skill-box">MS Word</div>
+                    <div class="skill-box">Excel</div>
+                    <div class="skill-box">Windows</div>
+                    <div class="skill-box">Linux</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section id="projects" class="projects-section">
         <h1 class="project-heading">My Projects</h1>
         <div class="projects-container">
             <div>
-                <div class="project-box" onclick="openNotebook('notebook1')" style="background-image: url('ecommerce.jpg');">
-                    <a href="https://alajingiganesh.github.io/ecommerce-website/" target="_blank" class="project-link" onclick="event.stopPropagation();">
+                <div class="project-box" onclick="openNotebook('notebook1')"
+                    style="background-image: url('ecommerce.jpg');">
+                    <a href="https://alajingiganesh.github.io/ecommerce-website/" target="_blank" class="project-link"
+                        onclick="event.stopPropagation();">
                         🔗
                     </a>
                 </div>
                 <div class="project-title">E-commerce Project</div>
             </div>
             <div>
-                <div class="project-box" onclick="openNotebook('notebook2')" style="background-image: url('expense tracker.jpg');">
-                    <a href="https://drive.google.com/drive/folders/1T2NLsAJ7xBF0aM9E6vbG2zvdA1V9wuky?usp=sharing" target="_blank" class="project-link" onclick="event.stopPropagation();">
+                <div class="project-box" onclick="openNotebook('notebook2')"
+                    style="background-image: url('expense tracker.jpg');">
+                    <a href="https://drive.google.com/drive/folders/1T2NLsAJ7xBF0aM9E6vbG2zvdA1V9wuky?usp=sharing"
+                        target="_blank" class="project-link" onclick="event.stopPropagation();">
                         🔗
                     </a>
                 </div>
@@ -214,53 +221,84 @@
             <div class="notebook-page">
                 <h2>🧩 List of Modules Used</h2>
                 <ul class="project-list">
-                    <li><strong>Frontend Development:</strong> HTML, CSS, and JavaScript used to build all pages and interfaces.</li>
-                    <li><strong>User Interface Design:</strong> Clean and responsive UI for Browse, searching, and viewing products.</li>
-                    <li><strong>Cart Management:</strong> JavaScript used to add, update, and remove items dynamically in the cart.</li>
-                    <li><strong>Product Display Pages:</strong> Each product has a dedicated HTML page with images and descriptions.</li>
-                    <li><strong>Category-wise Browse:</strong> Organized product categories like Men, Women, Kids, Gifts, Others.</li>
-                    <li><strong>Search Functionality:</strong> JavaScript-powered search to find products by name or category.</li>
-                    <li><strong>Data Handling:</strong> Static product data managed via product.json (no backend/database).</li>
-                    <li><strong>Image and Media Assets:</strong> All product and UI images stored locally in structured folders.</li>
-                    <li><strong>Navigation System:</strong> Navbar and footer components used for smooth page transitions.</li>
-                    <li><strong>Local Hosting & Testing:</strong> Can be opened in any browser or run using Live Server extensions (e.g., VS Code Live Server).</li>
+                    <li><strong>Frontend Development:</strong> HTML, CSS, and JavaScript used to build all pages and
+                        interfaces.</li>
+                    <li><strong>User Interface Design:</strong> Clean and responsive UI for Browse, searching, and
+                        viewing products.</li>
+                    <li><strong>Cart Management:</strong> JavaScript used to add, update, and remove items dynamically
+                        in the cart.</li>
+                    <li><strong>Product Display Pages:</strong> Each product has a dedicated HTML page with images and
+                        descriptions.</li>
+                    <li><strong>Category-wise Browse:</strong> Organized product categories like Men, Women, Kids,
+                        Gifts, Others.</li>
+                    <li><strong>Search Functionality:</strong> JavaScript-powered search to find products by name or
+                        category.</li>
+                    <li><strong>Data Handling:</strong> Static product data managed via product.json (no
+                        backend/database).</li>
+                    <li><strong>Image and Media Assets:</strong> All product and UI images stored locally in structured
+                        folders.</li>
+                    <li><strong>Navigation System:</strong> Navbar and footer components used for smooth page
+                        transitions.</li>
+                    <li><strong>Local Hosting & Testing:</strong> Can be opened in any browser or run using Live Server
+                        extensions (e.g., VS Code Live Server).</li>
                 </ul>
             </div>
             <div class="notebook-page">
                 <h2>✅ Functional Requirements</h2>
                 <p>These define what the system should do:</p>
                 <ul class="project-list">
-                    <li><strong>Product Browse:</strong> Users must be able to browse through product categories such as Men, Women, Kids, Gifts, and Others.</li>
-                    <li><strong>Product Detail View:</strong> Clicking on a product redirects users to a dedicated product detail page.</li>
+                    <li><strong>Product Browse:</strong> Users must be able to browse through product categories such as
+                        Men, Women, Kids, Gifts, and Others.</li>
+                    <li><strong>Product Detail View:</strong> Clicking on a product redirects users to a dedicated
+                        product detail page.</li>
                     <li><strong>Dynamic Shopping Cart:</strong> Users can add products to a shopping cart.</li>
-                    <li><strong>Search Functionality:</strong> A search bar is available for users to find products by name or keyword.</li>
-                    <li><strong>Navigation Between Pages:</strong> Users can navigate smoothly between Home, Categories, About, Contact, Cart, and Checkout pages.</li>
-                    <li><strong>Checkout View:</strong> Users can proceed to a static Checkout page to review cart items and total cost.</li>
-                    <li><strong>Responsive Design:</strong> The layout adjusts to different screen sizes and devices (desktop, tablet, mobile).</li>
+                    <li><strong>Search Functionality:</strong> A search bar is available for users to find products by
+                        name or keyword.</li>
+                    <li><strong>Navigation Between Pages:</strong> Users can navigate smoothly between Home, Categories,
+                        About, Contact, Cart, and Checkout pages.</li>
+                    <li><strong>Checkout View:</strong> Users can proceed to a static Checkout page to review cart items
+                        and total cost.</li>
+                    <li><strong>Responsive Design:</strong> The layout adjusts to different screen sizes and devices
+                        (desktop, tablet, mobile).</li>
                 </ul>
                 <h2>✅ Non-Functional Requirements</h2>
                 <p>These define how well the system performs:</p>
                 <ul class="project-list">
-                    <li><strong>Performance:</strong> The website should load quickly and respond to user interactions (like cart updates and search) within 1–2 seconds.</li>
-                    <li><strong>Usability:</strong> The interface is clean, simple, and intuitive, allowing users to browse, search, and manage their cart with ease.</li>
-                    <li><strong>Portability:</strong> The system is fully browser-based and can run on any modern device with a web browser.</li>
-                    <li><strong>Security:</strong> No login or sensitive data is collected, minimizing security risks.</li>
-                    <li><strong>Maintainability:</strong> The codebase is organized into clearly structured folders (like <code>categories/</code>, <code>components/</code>, etc.).</li>
-                    <li><strong>Reliability:</strong> Since it’s a static site with no backend, there are fewer points of failure.</li>
-                    <li><strong>Scalability (Limited):</strong> New product pages or categories can be easily added by duplicating templates and updating data in <code>product.json</code> (if used).</li>
+                    <li><strong>Performance:</strong> The website should load quickly and respond to user interactions
+                        (like cart updates and search) within 1–2 seconds.</li>
+                    <li><strong>Usability:</strong> The interface is clean, simple, and intuitive, allowing users to
+                        browse, search, and manage their cart with ease.</li>
+                    <li><strong>Portability:</strong> The system is fully browser-based and can run on any modern device
+                        with a web browser.</li>
+                    <li><strong>Security:</strong> No login or sensitive data is collected, minimizing security risks.
+                    </li>
+                    <li><strong>Maintainability:</strong> The codebase is organized into clearly structured folders
+                        (like <code>categories/</code>, <code>components/</code>, etc.).</li>
+                    <li><strong>Reliability:</strong> Since it’s a static site with no backend, there are fewer points
+                        of failure.</li>
+                    <li><strong>Scalability (Limited):</strong> New product pages or categories can be easily added by
+                        duplicating templates and updating data in <code>product.json</code> (if used).</li>
                 </ul>
             </div>
             <div class="notebook-page">
                 <h2>Limitations of the Project</h2>
                 <ul class="project-list">
-                    <li><strong>No Backend Integration:</strong> The site is purely frontend-based with no support for real-time database or user login features.</li>
-                    <li><strong>No Payment Gateway:</strong> Checkout is static — there is no integration with real-world payment systems like Razorpay or Stripe.</li>
-                    <li><strong>No Order History:</strong> Users cannot view previous orders or receive confirmation since there’s no server or database handling transactions.</li>
-                    <li><strong>Static Product Data:</strong> All product details are hardcoded or stored in static JSON. There's no dynamic product management or inventory system.</li>
-                    <li><strong>Limited Security:</strong> No user authentication or data encryption, as it doesn’t handle any personal/user-sensitive information.</li>
-                    <li><strong>No Admin Panel:</strong> There’s no backend dashboard to add or remove products dynamically. Everything must be edited manually.</li>
-                    <li><strong>Limited Scalability:</strong> While new products can be added manually, there’s no CMS or auto-generated product pages.</li>
-                    <li><strong>No Cart Persistence after Checkout:</strong> Cart is cleared on checkout but doesn’t generate or store any invoice or summary.</li>
+                    <li><strong>No Backend Integration:</strong> The site is purely frontend-based with no support for
+                        real-time database or user login features.</li>
+                    <li><strong>No Payment Gateway:</strong> Checkout is static — there is no integration with
+                        real-world payment systems like Razorpay or Stripe.</li>
+                    <li><strong>No Order History:</strong> Users cannot view previous orders or receive confirmation
+                        since there’s no server or database handling transactions.</li>
+                    <li><strong>Static Product Data:</strong> All product details are hardcoded or stored in static
+                        JSON. There's no dynamic product management or inventory system.</li>
+                    <li><strong>Limited Security:</strong> No user authentication or data encryption, as it doesn’t
+                        handle any personal/user-sensitive information.</li>
+                    <li><strong>No Admin Panel:</strong> There’s no backend dashboard to add or remove products
+                        dynamically. Everything must be edited manually.</li>
+                    <li><strong>Limited Scalability:</strong> While new products can be added manually, there’s no CMS
+                        or auto-generated product pages.</li>
+                    <li><strong>No Cart Persistence after Checkout:</strong> Cart is cleared on checkout but doesn’t
+                        generate or store any invoice or summary.</li>
                 </ul>
             </div>
             <div class="notebook-page">
@@ -301,10 +339,12 @@
                     <li><strong>Login System:</strong> Secure login with session tracking to protect user data.</li>
                     <li><strong>Income Entry:</strong> Users can input income with date, amount, and source.</li>
                     <li><strong>Expense Entry:</strong> Add expense details with category, amount, and purpose.</li>
-                    <li><strong>Transaction Management:</strong> Edit, delete, and update transaction records easily.</li>
+                    <li><strong>Transaction Management:</strong> Edit, delete, and update transaction records easily.
+                    </li>
                     <li><strong>Dashboard View:</strong> Summarized view of balance, income, and expenses.</li>
                     <li><strong>Monthly Report:</strong> View categorized monthly summaries of expenses and income.</li>
-                    <li><strong>Category Filtering:</strong> Quickly filter records by category like food, rent, travel, etc.</li>
+                    <li><strong>Category Filtering:</strong> Quickly filter records by category like food, rent, travel,
+                        etc.</li>
                     <li><strong>Password Change:</strong> Update password using form with validation.</li>
                     <li><strong>Responsive Layout:</strong> Accessible and usable on mobile, tablet, and desktop.</li>
                     <li><strong>User Feedback:</strong> Error messages and success alerts provided after actions.</li>
@@ -314,9 +354,11 @@
                 <h2>Page 3: Tools Used</h2>
                 <ul class="project-list">
                     <li><strong>HTML5:</strong> Used to create the basic structure and layout of web pages.</li>
-                    <li><strong>CSS3:</strong> Styling for UI design, form controls, dashboard layout, and responsiveness.</li>
+                    <li><strong>CSS3:</strong> Styling for UI design, form controls, dashboard layout, and
+                        responsiveness.</li>
                     <li><strong>JavaScript:</strong> Dynamic behavior for forms, validation, and interactivity.</li>
-                    <li><strong>PHP:</strong> Server-side logic for handling user login, data insertion, updates, etc.</li>
+                    <li><strong>PHP:</strong> Server-side logic for handling user login, data insertion, updates, etc.
+                    </li>
                     <li><strong>MySQL:</strong> Database for storing users, income, expense records.</li>
                     <li><strong>XAMPP:</strong> Local web server used for development and testing.</li>
                     <li><strong>Sessions:</strong> PHP sessions used to store login info and restrict access.</li>
@@ -330,13 +372,16 @@
                     <li><strong>User Login:</strong> Secure login with validation and session-based access control.</li>
                     <li><strong>Transaction Input:</strong> Add income and expense records with relevant details.</li>
                     <li><strong>Transaction Update:</strong> Edit or delete previous records from the dashboard.</li>
-                    <li><strong>Dashboard View:</strong> Visual summary of income, expense, and balance in real time.</li>
-                    <li><strong>Category-Based Filtering:</strong> Sort records by categories (like Food, Travel, Rent).</li>
+                    <li><strong>Dashboard View:</strong> Visual summary of income, expense, and balance in real time.
+                    </li>
+                    <li><strong>Category-Based Filtering:</strong> Sort records by categories (like Food, Travel, Rent).
+                    </li>
                     <li><strong>Monthly Reports:</strong> View expense/income records based on month or date range.</li>
                     <li><strong>Password Management:</strong> Allow users to change password securely.</li>
                     <li><strong>Logout:</strong> Proper logout mechanism to end sessions and secure data.</li>
                     <li><strong>Error Handling:</strong> Show user-friendly error messages on invalid input.</li>
-                    <li><strong>Navigation:</strong> Smooth transitions between login, dashboard, entry forms, and reports.</li>
+                    <li><strong>Navigation:</strong> Smooth transitions between login, dashboard, entry forms, and
+                        reports.</li>
                 </ul>
             </div>
             <div class="notebook-page">
@@ -353,6 +398,7 @@
         <button class="prev-btn" onclick="changePage('pages2', -1)">Prev</button>
         <button class="next-btn" onclick="changePage('pages2', 1)">Next</button>
     </div>
+
     <section id="education" class="education-section">
         <h2>🎓 My Education</h2>
         <p>Click on any card to explore details!</p>
@@ -386,41 +432,29 @@
         </div>
     </div>
 
+    <section id="certificate" class="certificates-section">
+        <h1 class="certificates-heading">Certificates of Alajingi Ganesh</h1>
 
-
-
-
-
-
-<section id="certificate" class="certificates-section">
-    <h1 class="certificates-heading">Certificates of Alajingi Ganesh</h1>
-
-    <div class="certificates-grid">
-        <div class="certificate-card" onclick="openCertificate('certificates/summer Internship.pdf')">Web Development Inernship
-            Certification</div>
-        <div class="certificate-card" onclick="openCertificate('certificates/besant.pdf')">Java (besant Technology)
-            Certification</div>
-        <div class="certificate-card" onclick="openCertificate('certificates/Cloud Computing.pdf')">Cloud Computing(NPTL)
+        <div class="certificates-grid">
+            <div class="certificate-card" onclick="openCertificate('certificates/summer Internship.jpeg')">Web
+                Development Internship Certification</div>
+            <div class="certificate-card" onclick="openCertificate('certificates/besant.jpeg')">Java (Besant Technology)
+                Certification</div>
+            <div class="certificate-card" onclick="openCertificate('certificates/Cloud Computing.jpeg')">Cloud
+                Computing (NPTEL)</div>
+            <div class="certificate-card" onclick="openCertificate('certificates/Data Analytics with Python.jpeg')">Data
+                Analytics with Python (NPTEL)</div>
+            <div class="certificate-card" onclick="openCertificate('certificates/icat.jpeg')">Participation ICAT Exam</div>
+            <div class="certificate-card" onclick="openCertificate('certificates/codsoft.jpeg')">CodSoft Offer Letter</div>
         </div>
-        <div class="certificate-card" onclick="openCertificate('certificates/Data Analytics with Python.pdf')">Data Analytics with Python(NPTL)
+
+        <div id="certificate-popup" class="certificate-popup">
+            <div class="certificate-popup-content">
+                <span class="close-popup" onclick="closeCertificatePopup()">&times;</span>
+                <img id="certificate-file" src="" alt="Certificate" />
+            </div>
         </div>
-        <div class="certificate-card" onclick="openCertificate('certificates/icat.pdf')">Participation ICAT exam</div>
-        <div class="certificate-card" onclick="openCertificate('certificates/codsoft.pdf')">cod soft offer letter</div>
-    </div>
-
-    <!-- Certificate Popup -->
-    <div id="certificate-popup" class="certificate-popup">
-        <div class="certificate-popup-content">
-            <span class="close-popup" onclick="closeCertificatePopup()">&times;</span>
-            <embed id="certificate-file" src="" type="application/pdf" width="100%" height="100%">
-        </div>
-    </div>
-</section>
-
-
-
-
-
+    </section>
 
     <section id="Contact" class="contact-section">
         <h2>📬 Contact Me</h2>
@@ -468,19 +502,25 @@
             </div>
         </div>
     </section>
+
     <button id="scrollTopBtn" title="Back to Top">⤴</button>
+
     <footer>
         <div class="social-icons">
             <a href="https://github.com/AlajingiGanesh" target="_blank" title="GitHub" class="footer-icon">🐙</a>
             <a href="https://linkedin.com/in/alajingiganesh" target="_blank" title="LinkedIn" class="footer-icon">🔗</a>
             <a href="mailto:ganeshalajingi123@gmail.com" title="Email" class="footer-icon">✉️</a>
-            <a href="https://www.facebook.com/profile.php?id=100080448969400" target="_blank" title="Facebook" class="footer-icon">📘</a>
-            <a href="https://www.instagram.com/reel/C-FoNLhudiD/?igsh=MWJtbDNkbnBtcHlnbg==" target="_blank" title="Instagram" class="footer-icon">📸</a>
+            <a href="https://www.facebook.com/profile.php?id=100080448969400" target="_blank" title="Facebook"
+                class="footer-icon">📘</a>
+            <a href="https://www.instagram.com/reel/C-FoNLhudiD/?igsh=MWJtbDNkbnBtcHlnbg==" target="_blank"
+                title="Instagram" class="footer-icon">📸</a>
         </div>
         <p>&copy; 2025 <strong>Alajingi Ganesh</strong> — All rights reserved.</p>
         <button onclick="scrollToTop()" title="Back to Top" class="footer-scroll-btn">☝️</button>
     </footer>
+
     <script src="script.js"></script>
 
 </body>
+
 </html>

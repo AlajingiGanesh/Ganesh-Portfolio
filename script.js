@@ -1,27 +1,35 @@
 /* ================================================================= */
 /* === CURTAIN AND UNLOCK ANIMATION LOGIC === */
 /* ================================================================= */
-/* ================================================================= */
-/* === CURTAIN AND UNLOCK ANIMATION LOGIC === */
-/* ================================================================= */
-/* ================================================================= */
-/* === CURTAIN AND UNLOCK ANIMATION LOGIC === */
-/* ================================================================= */
+/*
+This section handles the curtain, lock, and key animations that play when the page loads.
+It also includes the logic for the falling flower animation.
+*/
 function startUnlock() {
     const key = document.getElementById("key");
     const locker = document.getElementById("locker");
     const unlockContainer = document.getElementById("unlock-container");
 
-    // Move key to lock animation
-    key.style.top = "-60px";
-    key.style.transform = "rotate(720deg)";
+    // Stop floating/bounce animations
+    key.style.animation = "none";
+    locker.style.animation = "none";
 
-    // Change lock emoji after key reaches it
+    // Move lock & key to center (simulate overlap)
+    locker.style.transform = "translateY(40px)";
+    key.style.transform = "translateY(-65px) translateX(10px)";
+
+    // After reaching center, rotate key
     setTimeout(() => {
-        locker.innerText = "🔓";
+        key.style.transition = "transform 0.8s ease";
+        key.style.transform = "translateY(-65px) translateX(10px) rotate(360deg)";
     }, 1000);
 
-    // Open curtains, show content, and start flower animation
+    // Change lock emoji to unlocked
+    setTimeout(() => {
+        locker.innerText = "🔓";
+    }, 1800);
+
+    // Curtains open + page visible
     setTimeout(() => {
         document.getElementById("curtain-left").style.transform = "translateX(-100%)";
         document.getElementById("curtain-right").style.transform = "translateX(100%)";
@@ -34,20 +42,23 @@ function startUnlock() {
         setTimeout(() => {
             createFlowers();
         }, 2000);
-    }, 1600);
+    }, 2200);
 }
 
-/* NEW: Handle 'Enter' key press on the password input field */
+
+
+// Handle 'Enter' key press on the password input field
 function handleCurtainKeydown(event) {
     if (event.key === 'Enter') {
         startUnlock();
     }
 }
 
+// Function to create and animate falling flowers
 function createFlowers() {
     const flowerContainer = document.getElementById("flower-container");
     flowerContainer.style.display = "block";
-    const flowerEmojis = ['🌸', '🌺', '🌼', '🌷', '🌹'];
+    const starEmojis = ['⭐', '🌟', '✨', '💫', '🌠'];
     const numFlowers = 30;
 
     for (let i = 0; i < numFlowers; i++) {
@@ -96,132 +107,349 @@ function togglePasswordVisibility(inputId) {
         toggleIcon.innerText = '👁️'; // Change back to an open eye
     }
 }
+
+
 /* ================================================================= */
 /* === SMART RESUME CHATBOT LOGIC === */
 /* ================================================================= */
+/*
+This section contains the logic for the smart resume chatbot.
+It loads a PDF, processes the text, and provides answers to user questions
+based on a predefined set of questions and answers.
+*/
 
+// ===== Resume-driven Q&A + Smart Options =====
+// Facts pulled from your uploaded resume and prior mappings
+const resumeData = {
+  objective:
+    "Dynamic and committed student pursuing Computer Science and Engineering at IIIT Trichy, eager to apply expertise in real-world projects. Passionate about contributing to innovative initiatives and tackling industry challenges.",
+  education:
+    "B.Tech in Computer Science and Engineering at IIIT Trichy (Nov 2022 – May 2026). Current CGPA: 7.0.",
+  experience:
+    "E-Commerce Website (Internship/Hands-on): Built a responsive client-side platform for product exploration, quick search, and smooth shopping experience using HTML, CSS, JavaScript, and Bootstrap.",
+  projects: [
+    {
+      name: "Personal Expense Tracker",
+      stack: "PHP, MySQL, JavaScript, HTML/CSS",
+      points: [
+        "Secure logging of income/expenses with balance calculation",
+        "Interactive animated graphs for real-time visualization",
+        "Responsive UI for smooth experience",
+      ],
+    },
+    {
+      name: "Hospital Management System",
+      stack: "PHP, MySQL, JavaScript, HTML/CSS",
+      points: [
+        "Centralized platform for patients, staff, and appointments",
+        "Relational database schema design for operations",
+        "Intuitive interface to simplify scheduling",
+      ],
+    },
+    {
+      name: "Job Portal (Rhize OS Task)",
+      stack: "MERN (MongoDB, Express, React, Node), JWT",
+      points: [
+        "Listings & applications with role-based access (recruiter/applicant)",
+        "JWT authentication & secure flows",
+        "AI-guided features, responsive React frontend",
+      ],
+    },
+  ],
+  certifications:
+    "Scouts & Guides Certificate; Google Developer Student Club Certificates; Web Development Internship Certification; CodSoft Offer Letter; Participation in ICAT Exam.",
+  achievements:
+    "Won Cricket Cup (2024), Won Carrom Cup (2025), Multiple Kabaddi Cups in school.",
+  activities:
+    "GDSC participant (Jul 2024), Carrom Club Coordinator (Jul 2025), Dance Club Coordinator, School Pupil Leader (2 years).",
+  skillsCore: "C++, Java, HTML, CSS, JavaScript, React, MySQL",
+  skillsPlus:
+    "PHP, Bootstrap, Node.js, Express.js, MongoDB (MERN), JWT Auth, basic Python (Data Analytics with Python), Git/GitHub, Responsive UI, Problem Solving",
+  languagesSpoken:
+    "English, Telugu, Hindi, and basic Tamil.",
+  aim:
+    "To become a skilled full-stack developer and work at a top tech company.",
+  contact: {
+    location: "Hyderabad",
+    email: "ganeshalajingi123@gmail.com",
+    linkedin: "linkedin.com/in/alajingiganesh",
+    github: "github.com/AlajingiGanesh",
+  },
+  keyTraits:
+    "Adaptive Learning, Team Work, Time Management, Positive Attitude, Presentation Skills, Relationship Building, Self-Motivated, Leadership Qualities",
+  strengths:
+    "Self-driven, creative mindset, collaborative, takes ownership, learns fast.",
+  weaknesses:
+    "Tendency to overthink and aim for perfection—actively balancing done vs. perfect.",
+  challengeStory:
+    "In an e-commerce build, implementing a full cart without a backend was tricky. I used client-side JS with localStorage, designed clean state updates, and delivered a user-friendly flow—turning constraints into a learning opportunity.",
+  workStyle:
+    "Thrive in collaborative, learning-oriented teams that value innovation and ownership.",
+  relocation: "Open to relocation and new environments that support growth.",
+  expectedSalary:
+    "Based on skills and market, a starting package around ₹7 LPA is reasonable; I’m confident of delivering value to exceed expectations.",
+  availability: "Available for internships and full-time roles aligned with web/app development and full-stack engineering.",
+};
+
+// (Keeps your existing variables)
 let resumeText = "";
 
+// ===== Startup: greet + enable inputs + show options =====
 async function loadResume() {
-    try {
-        const pdf = await pdfjsLib.getDocument('resume.pdf').promise;
-        let text = "";
-        for (let i = 1; i <= pdf.numPages; i++) {
-            const page = await pdf.getPage(i);
-            const content = await page.getTextContent();
-            text += content.items.map(s => s.str).join(" ") + " ";
-        }
-        resumeText = text;
-        document.getElementById("question").disabled = false;
-        document.getElementById("askBtn").disabled = false;
-        appendMessage("Bot", "Hello ! Ask me anything about Alajingi Ganesh.");
-        document.getElementById("question").focus();
-    } catch (e) {
-        appendMessage("Bot", "Error loading resume. Please ensure 'resume.pdf' is in the same directory.");
-        console.error("Error loading PDF:", e);
+  // Keep your pdf.js flow intact (non-blocking for Q&A)
+  try {
+    const pdf = await pdfjsLib.getDocument("resume.pdf").promise;
+    let text = "";
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      text += content.items.map((s) => s.str).join(" ") + " ";
     }
+    resumeText = text;
+  } catch (e) {
+    // Silent catch—Q&A still works from resumeData
+    console.warn("PDF load issue (resume.pdf). Falling back to structured data.", e);
+  }
+
+  document.getElementById("question").disabled = false;
+  document.getElementById("askBtn").disabled = false;
+
+  appendMessage("Bot", "👋 Hello! Welcome to my Resume Chatbot. Ask anything about me, or pick a quick question below.");
+  showDefaultOptions(); // show clickable interview-style prompts
+  document.getElementById("question").focus();
 }
 
-function openChatbot() {
-    document.getElementById("chatbox").style.display = 'flex';
-}
+// ===== Quick question chips =====
+function showDefaultOptions() {
+  const chat = document.getElementById("chat");
 
-function closeChatbot() {
-    document.getElementById("chatbox").style.display = 'none';
-}
+  const options = [
+    // High-signal interview quick prompts
+    "Tell about you",
+    "What are your key strengths?",
+    "What is your weakness?",
+    "Education",
+    "Experience",
+    "Projects",
+    "Explain your Job Portal project",
+    "Explain your Expense Tracker project",
+    "Explain your Hospital Management System project",
+    "Skills",
+    "Tech stack you know",
+    "Programming languages you know",
+    "Certifications",
+    "Achievements",
+    "Activities / Leadership",
+    "Languages you speak",
+    "Your Goal / Aim",
+    "What challenges have you faced?",
+    "Preferred work environment",
+    "Are you open to relocation?",
+    "Expected salary",
+    "How can I contact you?",
+    "Share your GitHub / LinkedIn",
+    // Extras often asked in interviews/HR
+    "Why should we hire you?",
+    "What makes you different from other candidates?",
+    "Where do you see yourself in 5 years?",
+    "Hobbies / Interests",
+    "Availability",
+  ];
 
-function speakText(text) {
-    if ('speechSynthesis' in window && text.length < 300) {
-        const utter = new SpeechSynthesisUtterance(text);
-        utter.rate = 1;
-        speechSynthesis.speak(utter);
-    }
-}
-
-document.getElementById("toggleTheme").addEventListener("click", function () {
-    document.body.classList.toggle('dark-mode');
-});
-
-document.getElementById("question").addEventListener("keydown", function (e) {
-    if (e.key === "Enter") {
-        askQuestion();
-    }
-});
-
-function askQuestion() {
-    const q = document.getElementById("question").value.trim();
-    if (!q) return;
-    appendMessage("User", q);
-    const a = smartAnswer(q);
-    typeBotResponse(a);
-    speakText(a);
-    document.getElementById("question").value = "";
-    document.getElementById("question").focus();
-}
-
-function smartAnswer(q) {
-    q = q.toLowerCase();
-    const simpleMap = {
-        "name": "My full name is Alajingi Ganesh.",
-        "who are you": "I am Alajingi Ganesh, a Computer Science student from IIIT Trichy.",
-        "your graduation": "I will graduate in 2026.",
-        "graduation year": "I am expected to graduate in 2026.",
-        "cgpa": "My CGPA is 7.0.",
-        "languages": "I can speak English, Telugu, Hindi , and Basics Tamil.",
-        "how many languages": "I can speak three languages: English, Telugu, and Hindi.",
-        "programming": "Python Programming and basics of C and C++.",
-        "skills": "I am skilled in C++, Java, HTML, CSS, JavaScript, React, and MySQL.",
-        "projects": "I have developed an E-commerce Website and an Expense Tracker.",
-        "extra activity": "I am part of GDSC and serve as Carrom Club Coordinator.",
-        "aim": "My aim is to become a skilled full stack developer and work at a top tech company.",
-        "who created you": "I was created by Alajingi Ganesh himself.",
-        "how can you help": "I can help by answering questions about Alajingi Ganesh’s resume and skills.",
-        "where do you see yourself": "In the next 5 years, I see myself working in a reputed tech company, constantly learning and growing.",
-        "what do you want": "I want to help users explore my resume and skills.",
-        "thank you": "You are welcome!",
-        "hi": "Hello! You can ask anything about Alajingi Ganesh.",
-        "hello": "Hi, I am Alajingi Ganesh. Ask me anything.",
-        "bye": "Have a good day ! See you again.",
-        "strength": "I’m a self-driven person with a creative mindset. I love exploring new ideas and finding better ways to solve problems. I’m also good at teamwork and like taking up responsibilities.",
-        "weakness": "Sometimes I overthink and try to make everything too perfect. I’ve realized that done is better than perfect, so I’m learning to balance it better.",
-        "hobbies": "I enjoy exploring new tech trends, playing carrom, and participating in coding challenges. I also like organizing events, interacting with diverse people, and watching motivational videos to stay inspired and focused.",
-        "interests": "I enjoy exploring new tech trends, playing carrom, and participating in coding challenges. I also like organizing events, interacting with diverse people, and watching motivational videos to stay inspired and focused.",
-        "salary": "Based on my skills, projects, and the industry standards, I believe a starting package of ₹7 LPA is fair and motivating. I’m confident that I can deliver value to match and exceed that expectation.",
-        "why should we hire you": "Because I bring a strong mix of technical skills, creativity, and genuine passion for learning. I don’t just code — I build. I’m also someone who takes ownership, adapts fast, and collaborates well. I won’t just fill a role — I’ll grow with it.",
-        "after 5 years": "I see myself as a reliable and skilled professional leading impactful tech projects, contributing to product innovation, and possibly mentoring junior developers. My goal is to become a key contributor wherever I work — technically and culturally.",
-        "different from other candidates": "I combine technical foundation with creativity and persistence. I’m not afraid to try new things, take smart risks, and I keep improving. I’ve built real projects, taken part in clubs, and balanced responsibilities — all of which shaped my mindset to be solution-oriented and dependable.",
-        "challenge": "During my e-commerce project, I had to implement a full cart system without backend support. It was tricky, but I used client-side JS with local storage smartly and made it user-friendly. This taught me how to handle limitations creatively.",
-        "relocation": "Yes. I believe flexibility is a strength in today's dynamic work culture. I'm always open to new places and experiences that help me grow professionally.",
-        "team player": "Both. I enjoy working in teams where ideas bounce and grow — like in GDSC and Carrom Club. But I’m equally comfortable taking full ownership of tasks, as I did in my solo portfolio and project builds. I adjust based on what brings the best outcome.",
-        "failure": "I treat it as feedback, not defeat. In fact, failure has taught me more than success. I analyze, learn, and come back stronger. That mindset helps me grow continuously and improve with every attempt.",
-        "criticism": "I treat it as feedback, not defeat. In fact, failure has taught me more than success. I analyze, learn, and come back stronger. That mindset helps me grow continuously and improve with every attempt.",
-        "work environment": "A place where innovation is valued, learning is constant, and people support each other’s growth. I thrive in environments that are collaborative, open to ideas, and driven by meaningful goals."
+  const container = document.createElement("div");
+  container.className = "bot-options";
+  options.forEach((opt) => {
+    const btn = document.createElement("button");
+    btn.className = "option-btn";
+    btn.innerText = opt;
+    btn.onclick = () => {
+      appendMessage("User", opt);
+      const a = smartAnswer(opt);
+      typeBotResponse(a);
+      speakText(a);
     };
-    for (let key in simpleMap) {
-        if (q.includes(key)) return simpleMap[key];
+    container.appendChild(btn);
+  });
+  chat.appendChild(container);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+// ===== Core smart answer (expanded) =====
+function smartAnswer(q) {
+  const question = q.toLowerCase();
+
+  // Category shortcuts
+  if (includesAny(question, ["tell about", "about you", "who are you", "objective"]))
+    return resumeData.objective;
+
+  if (includesAny(question, ["education", "study", "college", "cgpa", "graduation"]))
+    return `${resumeData.education} Graduation year: 2026.`;
+
+  if (includesAny(question, ["experience", "internship", "work experience"]))
+    return resumeData.experience;
+
+  if (includesAny(question, ["skills", "skillset"]))
+    return `Core: ${resumeData.skillsCore}\nAlso worked with: ${resumeData.skillsPlus}`;
+
+  if (includesAny(question, ["tech stack"]))
+    return `${resumeData.skillsCore}; plus ${resumeData.skillsPlus}.`;
+
+  if (includesAny(question, ["programming languages"]))
+    return "C++, Java, JavaScript (React), plus PHP and basic Python.";
+
+  if (includesAny(question, ["projects"]))
+    return formatProjects(resumeData.projects);
+
+  // Project deep-dives
+  if (includesAny(question, ["expense", "tracker"]))
+    return detailProject("Personal Expense Tracker");
+  if (includesAny(question, ["hospital", "management"]))
+    return detailProject("Hospital Management System");
+  if (includesAny(question, ["job portal", "job-portal", "mern"]))
+    return detailProject("Job Portal (Rhize OS Task)");
+
+  if (includesAny(question, ["achievements", "awards", "prizes"]))
+    return resumeData.achievements;
+
+  if (includesAny(question, ["activities", "leadership", "clubs", "positions"]))
+    return resumeData.activities;
+
+  if (includesAny(question, ["certificate", "certifications"]))
+    return resumeData.certifications;
+
+  if (includesAny(question, ["languages you speak", "speak", "communication"]))
+    return resumeData.languagesSpoken;
+
+  if (includesAny(question, ["goal", "aim"]))
+    return resumeData.aim;
+
+  if (includesAny(question, ["challenge", "difficult", "problem faced"]))
+    return resumeData.challengeStory;
+
+  if (includesAny(question, ["work environment", "culture", "team", "collaboration"]))
+    return resumeData.workStyle;
+
+  if (includesAny(question, ["relocation"]))
+    return resumeData.relocation;
+
+  if (includesAny(question, ["expected salary", "ctc", "salary"]))
+    return resumeData.expectedSalary;
+
+  if (includesAny(question, ["availability", "join", "notice"]))
+    return resumeData.availability;
+
+  if (includesAny(question, ["contact", "email", "phone", "reach"]))
+    return `Location: ${resumeData.contact.location}\nEmail: ${resumeData.contact.email}`;
+
+  if (includesAny(question, ["github", "linkedin", "links"]))
+    return `GitHub: ${resumeData.contact.github}\nLinkedIn: ${resumeData.contact.linkedin}`;
+
+  if (includesAny(question, ["strength", "strengths"]))
+    return resumeData.strengths;
+
+  if (includesAny(question, ["weakness", "weaknesses"]))
+    return resumeData.weaknesses;
+
+  if (includesAny(question, ["why should we hire you", "hire you"]))
+    return "I combine solid fundamentals with hands-on projects and a creative, ownership-driven mindset. I adapt quickly, collaborate well, and focus on delivering business value—so I won’t just fill a role, I’ll grow it.";
+
+  if (includesAny(question, ["different from other candidates", "unique", "stand out"]))
+    return "I’m a builder with persistence—comfortable taking end-to-end ownership, learning fast, and shipping usable outcomes. My mix of leadership activities and practical projects gives me both soft skills and technical depth.";
+
+  if (includesAny(question, ["5 years", "five years", "where do you see yourself"]))
+    return "Leading impactful projects as a reliable full-stack engineer, mentoring juniors, and contributing to product decisions while continuously learning.";
+
+  if (includesAny(question, ["hobby", "hobbies", "interests"]))
+    return "Exploring new tech trends, playing carrom, coding challenges, organizing events, and watching motivational content to stay focused.";
+
+  // Math handling (same as your original, guarded)
+  try {
+    if (/^[0-9+\-*/().\s]+$/.test(question)) {
+      // eslint-disable-next-line no-eval
+      return "The answer is " + eval(question);
     }
-    // Math handling
-    try {
-        if (/^[0-9+\-*/().\s]+$/.test(q)) {
-            return "The answer is " + eval(q);
-        }
-    } catch (e) {}
-    return "Sorry, I could not find a relevant answer.";
+  } catch (e) {}
+
+  return "Sorry, I couldn’t find a precise answer. Try one of the quick questions above or ask about Education, Experience, Projects, Skills, or Achievements.";
 }
 
+// ===== Helpers =====
+function includesAny(text, keys) {
+  return keys.some((k) => text.includes(k));
+}
+
+function formatProjects(list) {
+  return list
+    .map(
+      (p, i) =>
+        `${i + 1}. ${p.name} — ${p.stack}\n   • ${p.points.join("\n   • ")}`
+    )
+    .join("\n\n");
+}
+
+function detailProject(name) {
+  const p = resumeData.projects.find((x) => x.name.toLowerCase().includes(name.toLowerCase()));
+  if (!p) return "Project details not found.";
+  return `${p.name} — ${p.stack}\n• ${p.points.join("\n• ")}`;
+}
+
+// ===== Your existing functions remain unchanged below =====
+
+// Open/close
+function openChatbot() {
+  document.getElementById("chatbox").style.display = "flex";
+}
+function closeChatbot() {
+  document.getElementById("chatbox").style.display = "none";
+}
+
+// TTS
+function speakText(text) {
+  if ("speechSynthesis" in window && text.length < 300) {
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.rate = 1;
+    speechSynthesis.speak(utter);
+  }
+}
+
+// Theme toggle
+document.getElementById("toggleTheme").addEventListener("click", function () {
+  document.body.classList.toggle("dark-mode");
+});
+
+// Enter to ask
+document.getElementById("question").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") askQuestion();
+});
+
+// Ask flow
+function askQuestion() {
+  const q = document.getElementById("question").value.trim();
+  if (!q) return;
+  appendMessage("User", q);
+  const a = smartAnswer(q);
+  typeBotResponse(a);
+  speakText(a);
+  document.getElementById("question").value = "";
+  document.getElementById("question").focus();
+}
+
+// Append message
 function appendMessage(sender, text) {
-    const msg = document.createElement("div");
-    msg.className = `message ${sender === "User" ? "user-msg" : "bot-msg"}`;
-    msg.innerText = text;
-    document.getElementById("chat").appendChild(msg);
-    document.getElementById("chat").scrollTop = 9999;
+  const msg = document.createElement("div");
+  msg.className = `message ${sender === "User" ? "user-msg" : "bot-msg"}`;
+  msg.innerText = text;
+  document.getElementById("chat").appendChild(msg);
+  document.getElementById("chat").scrollTop = 9999;
 }
 
+// Typing effect
 function typeBotResponse(text) {
     const chat = document.getElementById("chat");
     const msg = document.createElement("div");
     msg.className = "message bot-msg";
     chat.appendChild(msg);
+
     let index = 0;
     const interval = setInterval(() => {
         if (index < text.length) {
@@ -230,18 +458,50 @@ function typeBotResponse(text) {
             index++;
         } else {
             clearInterval(interval);
+
+            // After typing is done → speak
+            speakText(text);
+
+            // After voice finished (approx timing = text length / speed), show "More Questions" button
+            setTimeout(() => {
+                showMoreQuestionsButton();
+            }, Math.min(3000, text.length * 20));
         }
-    }, 20);
+    }, 15);
 }
 
-// Initial load
+function showMoreQuestionsButton() {
+    const chat = document.getElementById("chat");
+    const container = document.createElement("div");
+    container.className = "bot-options";
+
+    const btn = document.createElement("button");
+    btn.className = "option-btn";
+    btn.innerText = "➕ More Questions";
+    btn.onclick = () => {
+        container.remove(); // remove button
+        showDefaultOptions(); // show options again
+    };
+
+    container.appendChild(btn);
+    chat.appendChild(container);
+    chat.scrollTop = chat.scrollHeight;
+}
+
+// Boot
 loadResume();
+
 
 
 /* ================================================================= */
 /* === RESUME PASSKEY LOGIC === */
 /* ================================================================= */
+/*
+This section handles the passkey prompt for downloading the resume.
+It validates the user-entered passkey and triggers the download on success.
+*/
 
+// Function to show the resume download prompt
 function promptDownload() {
     document.getElementById("resumePrompt").style.display = "flex";
     document.getElementById("resumeKey").value = "";
@@ -249,11 +509,13 @@ function promptDownload() {
     document.getElementById("successTick").style.display = "none";
 }
 
+// Function to close the resume download prompt
 function closePrompt() {
     document.getElementById("resumePrompt").style.display = "none";
     document.getElementById("popupBox").classList.remove("shake");
 }
 
+// Function to verify the entered passkey
 function verifyKey() {
     const key = document.getElementById("resumeKey").value.trim();
     const correctKey = "cherry#2003";
@@ -284,9 +546,13 @@ function verifyKey() {
 /* ================================================================= */
 /* === SKILL SECTION MODAL & ANIMATION LOGIC === */
 /* ================================================================= */
+/*
+This section manages the popups for the skills section, including a small tooltip-like modal
+and a larger popup for all skills.
+*/
 
 
-
+// Function to open the small skill modal
 function openModal(title, description, event) {
     const modal = document.getElementById("skillModal");
     const modalTitle = document.getElementById("modal-title");
@@ -303,14 +569,17 @@ function openModal(title, description, event) {
     modal.style.display = "block";
 }
 
+// Function to close the small skill modal
 function closeModal() {
     document.getElementById("skillModal").style.display = "none";
 }
 
+// Function to open the large skills popup
 function openSkillPopup() {
     document.getElementById("skills-popup").style.display = "flex";
 }
 
+// Function to close the large skills popup
 function closeSkillPopup() {
     document.getElementById("skills-popup").style.display = "none";
 }
@@ -320,13 +589,19 @@ function closeSkillPopup() {
 /* ================================================================= */
 /* === PROJECT NOTEBOOK LOGIC === */
 /* ================================================================= */
+/*
+This section controls the interactive notebook popups for the projects.
+It handles opening, closing, and navigating through the pages of each notebook.
+*/
 
 let currentPages = { pages1: 0, pages2: 0 };
 
+// Function to open a specific notebook
 function openNotebook(id) {
     document.getElementById(id).style.display = 'block';
 }
 
+// Function to close a notebook and reset its page
 function closeNotebook(id) {
     document.getElementById(id).style.display = 'none';
     const pageContainerId = id === 'notebook1' ? 'pages1' : 'pages2';
@@ -334,6 +609,7 @@ function closeNotebook(id) {
     document.getElementById(pageContainerId).style.transform = 'translateX(0)';
 }
 
+// Function to change the page in a notebook
 function changePage(containerId, step) {
     const container = document.getElementById(containerId);
     const pages = container.querySelectorAll('.notebook-page');
@@ -347,7 +623,12 @@ function changePage(containerId, step) {
 /* ================================================================= */
 /* === EDUCATION POPUP LOGIC === */
 /* ================================================================= */
+/*
+This section manages the popups for the education section, displaying details
+and a photo gallery for each educational institution.
+*/
 
+// Function to open the education popup with dynamic content
 function openEduPopup(type) {
     let content = '';
     if (type === 'school') {
@@ -398,17 +679,20 @@ function openEduPopup(type) {
     document.getElementById("eduPopup").style.display = 'flex';
 }
 
+// Function to close the education popup
 function closeEduPopup() {
     document.getElementById("eduPopup").style.display = 'none';
     document.getElementById("eduPopupContent").innerHTML = `<button class="popup-close" onclick="closeEduPopup()">×</button>`;
 }
 
+// Function to open the enlarged image popup
 function openImagePopup(src) {
     const img = document.getElementById("popupImage");
     img.src = src;
     document.getElementById("imagePopup").style.display = "flex";
 }
 
+// Function to close the enlarged image popup
 function closeImagePopup(event) {
     if (!event || event.target.id === "imagePopup" || event.target.id === "closePopupBtn") {
         document.getElementById("imagePopup").style.display = "none";
@@ -417,27 +701,37 @@ function closeImagePopup(event) {
 }
 
 
-
-
 /* ================================================================= */
 /* === Certificate SECTION LOGIC === */
 /* ================================================================= */
+/*
+This section handles the logic for viewing PDF certificates in a popup.
+*/
 
 
-function openCertificate(fileSrc) {
-    document.getElementById("certificate-file").src = fileSrc;
-    document.getElementById("certificate-popup").style.display = "flex";
-}
 
-function closeCertificatePopup() {
-    document.getElementById("certificate-popup").style.display = "none";
-}
+    // Function to open a certificate image in a popup
+    function openCertificate(fileSrc) {
+        document.getElementById("certificate-file").src = fileSrc;
+        document.getElementById("certificate-popup").style.display = "flex";
+    }
+
+    // Function to close the certificate popup
+    function closeCertificatePopup() {
+        document.getElementById("certificate-popup").style.display = "none";
+        document.getElementById("certificate-file").src = ""; // clear on close
+    }
 
 
 /* ================================================================= */
 /* === CONTACT SECTION LOGIC === */
 /* ================================================================= */
+/*
+This section contains logic for the contact form, including a visual effect
+when contact links are clicked and a "thank you" popup after form submission.
+*/
 
+// Function to trigger a visual popup emoji and open a link
 function triggerContact(emoji, link) {
     const pop = document.createElement("div");
     pop.className = "popup-emoji";
@@ -451,12 +745,14 @@ function triggerContact(emoji, link) {
     }, 700);
 }
 
+// Function to handle the contact form submission
 function handleSubmit(e) {
     e.preventDefault();
     document.getElementById("popupOverlay").style.display = "block";
     document.getElementById("contactForm").reset();
 }
 
+// Function to close the contact form "thank you" popup
 function closePopup() {
     document.getElementById("popupOverlay").style.display = "none";
 }
@@ -465,6 +761,9 @@ function closePopup() {
 /* ================================================================= */
 /* === BACK TO TOP & FOOTER LOGIC === */
 /* ================================================================= */
+/*
+This section manages the "back to top" button functionality and general footer logic.
+*/
 
 // Show the scroll button after scrolling down 200px
 window.addEventListener("scroll", function () {
@@ -481,6 +780,7 @@ document.getElementById("scrollTopBtn").addEventListener("click", function () {
     window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
+// Function to scroll to the top of the page
 function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }

@@ -1,129 +1,132 @@
 /* ================================================================= */
 /* === GLOBAL & UTILITY STYLES === */
 /* ================================================================= */
-
+/* Base styles for the body */
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
 }
 
+/* ----------------------------------------------------------------- */
+/* NEW STYLES: UNLOCK CONTAINER AND ANIMATIONS */
+/* ----------------------------------------------------------------- */
 
-
-/* NEW: Updated styles for the unlock container to accommodate the password field */
+/* Styles for the main unlock container with blur effect */
+/* Unlock container with animated colorful gradient */
+/* Unlock container with animated gradient */
 #unlock-container {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 25;
-    width: 250px;
+    width: 280px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 15px;
-    padding: 20px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 15px;
-    backdrop-filter: blur(5px);
+    gap: 20px;
+    padding: 30px;
+    background: linear-gradient(270deg, #ff6a00, #ee0979, #00c6ff, #6a11cb);
+    background-size: 600% 600%;
+    animation: gradientShift 8s ease infinite;
+    border-radius: 20px;
+    backdrop-filter: blur(8px);
     text-align: center;
     height: 100vh;
 }
-#unlock-container.shake {
-    animation: shake 0.5s;
-}
 
-
-#locker, #key {
-    font-size: 2.5rem;
+/* Big centered lock */
+#locker {
+    font-size: 5rem;
     cursor: pointer;
-}
-
-.password-input-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-}
-.password-input-container input {
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    width: 100%;
-    box-sizing: border-box;
-}
-.password-input-container button {
-    padding: 10px 20px;
-    background: #2575fc;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-.password-input-container button:hover {
-    transform: scale(1.05);
-}
-.error-msg {
-    color: red;
-    font-size: 14px;
-    margin-top: 5px;
-    display: none; /* Initially hidden */
-}
-.fade-error {
-    animation: fade-error 0.5s ease;
-}
-
-/* NEW STYLES: For the falling flowers animation */
-#flower-container {
-    /* ... (rest of the styles) ... */
-    overflow: hidden;
-}
-.flower {
-    position: absolute;
-    font-size: 24px;
-    animation: fall 2s linear infinite; /* <-- The animation now runs for 2 seconds */
-    opacity: 0;
-}
-@keyframes fall {
-    0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(110vh) rotate(360deg); opacity: 0.5; }
-}
-
-/* The single, correct block for password toggle styling. */
-.password-wrapper {
+    transition: all 1s ease;
+    display: inline-block;
     position: relative;
-    width: 100%;
 }
 
-.password-input-container input {
-    /* Add padding to make space for the eye icon */
-    padding-right: 40px;
-}
-
-.password-toggle {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+/* Key styling */
+#key {
+    font-size: 3rem;
     cursor: pointer;
-    font-size: 20px;
+    transition: all 1s ease;
+    display: inline-block;
+    position: relative;
 }
 
+/* Tap message styling */
+.tap-msg {
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #fff;
+    font-family: "Comic Sans MS", "Poppins", cursive;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7),
+        0 0 20px rgba(255, 0, 255, 0.5);
+    animation: pulseText 1.5s infinite;
+}
 
-/* === GENERAL ANIMATIONS === */
+/* Background animation */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Pulse animation for Tap */
+@keyframes pulseText {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 0.7;
+    }
+}
+
+/* ----------------------------------------------------------------- */
+/* GENERAL ANIMATIONS */
+/* ----------------------------------------------------------------- */
+
 @keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-40px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
+/* Hover effect for links */
 a:hover {
     background-color: #ffd700 !important;
     color: black !important;
@@ -136,20 +139,22 @@ a:hover {
         opacity: 0;
         transform: translateY(-40px) scale(0.95);
     }
+
     100% {
         opacity: 1;
         transform: translateY(0) scale(1);
     }
 }
 
-
 /* ================================================================= */
 /* === CURTAIN AND UNLOCK ANIMATION === */
 /* ================================================================= */
 
+/* Left curtain styling */
 #curtain-left {
     position: fixed;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     width: 50vw;
     height: 100vh;
     background: url('curtain.jpg') center/cover no-repeat;
@@ -157,9 +162,11 @@ a:hover {
     transition: transform 2s ease-in-out;
 }
 
+/* Right curtain styling */
 #curtain-right {
     position: fixed;
-    top: 0; right: 0;
+    top: 0;
+    right: 0;
     width: 50vw;
     height: 100vh;
     background: url('curtain.jpg') center/cover no-repeat;
@@ -167,6 +174,7 @@ a:hover {
     transition: transform 2s ease-in-out;
 }
 
+/* Unlock container styling (before key animation) */
 #unlock-container {
     position: fixed;
     top: 50%;
@@ -182,10 +190,12 @@ a:hover {
     justify-content: center;
 }
 
+/* Locker emoji styling */
 #locker {
     font-size: 50px;
 }
 
+/* Key emoji styling and animation */
 #key {
     font-size: 40px;
     margin-top: 10px;
@@ -193,11 +203,11 @@ a:hover {
     position: relative;
 }
 
-
 /* ================================================================= */
 /* === SMART RESUME CHATBOT STYLES === */
 /* ================================================================= */
 
+/* CSS variables for light and dark mode */
 :root {
     --main-bg: #ffffff;
     --text-color: #111;
@@ -206,6 +216,7 @@ a:hover {
     --accent: #2575fc;
 }
 
+/* Dark mode styles */
 body.dark-mode {
     --main-bg: #181818;
     --text-color: #f1f1f1;
@@ -214,7 +225,9 @@ body.dark-mode {
     --accent: #00c6ff;
 }
 
-#smartBtn, #toggleTheme {
+/* Styles for smart button and theme toggle */
+#smartBtn,
+#toggleTheme {
     position: fixed;
     z-index: 1001;
     border: none;
@@ -225,15 +238,17 @@ body.dark-mode {
     cursor: pointer;
 }
 
+/* Smart button specific styles */
 #smartBtn {
     bottom: 30px;
     right: 30px;
     background: linear-gradient(135deg, #6e00ff, #00c6ff);
     color: white;
     animation: pulse 2s infinite;
-    box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
 }
 
+/* Theme toggle button specific styles */
 #toggleTheme {
     top: 20px;
     right: 20px;
@@ -243,12 +258,22 @@ body.dark-mode {
     border-radius: 20px;
 }
 
+/* Pulse animation for the smart button */
 @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.08); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
+/* Main chatbot container styles */
 .chatbot-container {
     position: fixed;
     bottom: 90px;
@@ -257,7 +282,7 @@ body.dark-mode {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     display: none;
     flex-direction: column;
     overflow: hidden;
@@ -265,16 +290,30 @@ body.dark-mode {
     animation: bounceFadeIn 0.6s ease-out;
 }
 
+/* Dark mode for chatbot container */
 body.dark-mode .chatbot-container {
     background: rgba(34, 34, 34, 0.9);
 }
 
+/* Bounce-in animation for the chatbot */
 @keyframes bounceFadeIn {
-    0% { transform: scale(0.5) translateY(100px); opacity: 0; }
-    50% { transform: scale(1.05) translateY(-10px); opacity: 0.5; }
-    100% { transform: scale(1) translateY(0); opacity: 1; }
+    0% {
+        transform: scale(0.5) translateY(100px);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.05) translateY(-10px);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
 }
 
+/* Chatbot header styling */
 .chat-header {
     background: linear-gradient(45deg, #6a11cb, #2575fc);
     color: white;
@@ -284,6 +323,7 @@ body.dark-mode .chatbot-container {
     position: relative;
 }
 
+/* Chatbot close button */
 .chat-close {
     position: absolute;
     right: 14px;
@@ -295,17 +335,20 @@ body.dark-mode .chatbot-container {
     cursor: pointer;
 }
 
+/* Chatbot body/message area */
 .chat-body {
     height: 320px;
     overflow-y: auto;
     padding: 10px;
 }
 
+/* Chatbot input area */
 .chat-input {
     display: flex;
     border-top: 1px solid #ccc;
 }
 
+/* Chatbot input field */
 .chat-input input {
     flex: 1;
     border: none;
@@ -313,6 +356,7 @@ body.dark-mode .chatbot-container {
     font-size: 14px;
 }
 
+/* Chatbot ask button */
 .chat-input button {
     background: var(--accent);
     color: white;
@@ -321,6 +365,7 @@ body.dark-mode .chatbot-container {
     cursor: pointer;
 }
 
+/* Message bubble styling */
 .message {
     margin: 8px 0;
     padding: 8px 12px;
@@ -330,23 +375,25 @@ body.dark-mode .chatbot-container {
     white-space: pre-wrap;
 }
 
+/* User message bubble */
 .user-msg {
     background: var(--user-bg);
     color: var(--accent);
     margin-left: auto;
 }
 
+/* Bot message bubble */
 .bot-msg {
     background: var(--bot-bg);
     color: var(--text-color);
     margin-right: auto;
 }
 
-
 /* ================================================================= */
 /* === MAIN CONTENT (NAVBAR & VIDEO) === */
 /* ================================================================= */
 
+/* Container for the video background */
 .navbar-video-container {
     position: relative;
     height: 200px;
@@ -354,15 +401,18 @@ body.dark-mode .chatbot-container {
     overflow: hidden;
 }
 
+/* Video background itself */
 .video-bg {
     position: absolute;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     min-width: 100%;
     min-height: 100%;
     object-fit: cover;
     z-index: -1;
 }
 
+/* Container for the welcome text */
 .welcome-text-container {
     height: 100%;
     display: flex;
@@ -372,6 +422,7 @@ body.dark-mode .chatbot-container {
     text-align: center;
 }
 
+/* Heading for the welcome text */
 .welcome-text-container h1 {
     font-size: 32px;
     /* slightly smaller */
@@ -390,6 +441,7 @@ body.dark-mode .chatbot-container {
     animation: namePulse 2s ease-in-out infinite;
 }
 
+/* Keyframes for the name pulse animation */
 @keyframes namePulse {
 
     0%,
@@ -405,6 +457,7 @@ body.dark-mode .chatbot-container {
 /* ================================================================= */
 /* === NAVIGATION LINKS (UPDATED FOR RESPONSIVENESS) === */
 /* ================================================================= */
+/* Navigation links container */
 .nav-links {
     display: flex;
     justify-content: center;
@@ -414,6 +467,7 @@ body.dark-mode .chatbot-container {
     animation: fadeInUp 1.5s ease-in-out;
 }
 
+/* Individual navigation link styling */
 .nav-links a {
     text-decoration: none;
     color: #333;
@@ -421,21 +475,25 @@ body.dark-mode .chatbot-container {
     padding: 10px 20px;
     border-radius: 8px;
     background: #fff;
-    box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
     transition: 0.3s;
 }
 
-/* NEW: Media query for small screens (mobile view) */
+/* Media query for small screens (mobile view) */
 @media (max-width: 768px) {
     .nav-links {
-        flex-wrap: wrap; /* Allow items to wrap to a new line */
-        gap: 10px; /* Adjust the space between items */
+        flex-wrap: wrap;
+        /* Allow items to wrap to a new line */
+        gap: 10px;
+        /* Adjust the space between items */
     }
 
     .nav-links a {
-        flex: 1 1 auto; /* Allow links to grow and shrink */
+        flex: 1 1 auto;
+        /* Allow links to grow and shrink */
         text-align: center;
-        width: calc(50% - 10px); /* Make links take up half the width with some gap */
+        width: calc(50% - 10px);
+        /* Make links take up half the width with some gap */
         box-sizing: border-box;
     }
 }
@@ -445,43 +503,70 @@ body.dark-mode .chatbot-container {
 /* === RESUME PASSKEY POPUP === */
 /* ================================================================= */
 
+/* Keyframes for pop-in animation */
 @keyframes fadeInScale {
-    0% { transform: scale(0.8); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
+/* Keyframes for shake animation */
 @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-10px); }
-    40%, 80% { transform: translateX(10px); }
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20%,
+    60% {
+        transform: translateX(-10px);
+    }
+
+    40%,
+    80% {
+        transform: translateX(10px);
+    }
 }
 
+/* Main popup overlay */
 .resume-prompt {
     display: none;
     position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     backdrop-filter: blur(6px);
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.4);
     z-index: 9999;
     justify-content: center;
     align-items: center;
 }
 
+/* The actual popup box */
 .popup-box {
     background: white;
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     text-align: center;
     max-width: 90%;
     animation: fadeInScale 0.3s ease;
 }
 
+/* Popup heading */
 .popup-box h3 {
     margin-bottom: 10px;
 }
 
+/* Input field in popup */
 .popup-box input {
     padding: 10px;
     width: 80%;
@@ -490,6 +575,7 @@ body.dark-mode .chatbot-container {
     border: 1px solid #ccc;
 }
 
+/* Submit button in popup */
 .popup-box button {
     padding: 10px 20px;
     background: #2575fc;
@@ -499,16 +585,19 @@ body.dark-mode .chatbot-container {
     cursor: pointer;
 }
 
+/* Cancel button in popup */
 .popup-box button:last-child {
     background: #999;
     margin-left: 10px;
 }
 
+/* Error message styling */
 .error-msg {
     color: red;
     margin-top: 12px;
 }
 
+/* Success tick icon styling */
 #successTick {
     font-size: 40px;
     margin-top: 15px;
@@ -521,6 +610,7 @@ body.dark-mode .chatbot-container {
 /* === ABOUT SECTION === */
 /* ================================================================= */
 
+/* Main about section styling */
 .about-section {
     padding: 60px 30px;
     background: linear-gradient(135deg, #1f1c2c, #928DAB);
@@ -530,29 +620,50 @@ body.dark-mode .chatbot-container {
     overflow: hidden;
 }
 
+/* Background glowing animation effect */
 .bg-glow {
     position: absolute;
-    top: -50px; left: -50px;
-    width: 200%; height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+    top: -50px;
+    left: -50px;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, transparent 70%);
     animation: rotateBG 60s linear infinite;
 }
 
+/* Content wrapper */
 .about-content {
     position: relative;
     z-index: 2;
 }
 
+/* Keyframes for rotating background */
 @keyframes rotateBG {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
+/* Keyframes for floating and glowing profile picture */
 @keyframes floatGlow {
-    0%, 100% { transform: translateY(0); box-shadow: 0 0 20px rgba(255,255,255,0.2); }
-    50% { transform: translateY(-10px); box-shadow: 0 0 40px rgba(255,255,255,0.3); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+
+    50% {
+        transform: translateY(-10px);
+        box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+    }
 }
 
+/* Profile picture container */
 .profile-pic {
     width: 250px;
     height: 250px;
@@ -564,6 +675,7 @@ body.dark-mode .chatbot-container {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Image inside the profile picture container */
 .profile-pic img {
     width: 100%;
     height: 100%;
@@ -571,6 +683,7 @@ body.dark-mode .chatbot-container {
     transition: transform 0.3s ease;
 }
 
+/* Hover effect for profile picture */
 .profile-pic:hover {
     transform: scale(1.1);
     box-shadow: 0 0 40px rgba(0, 123, 255, 0.6), 0 0 80px rgba(0, 123, 255, 0.4);
@@ -580,6 +693,7 @@ body.dark-mode .chatbot-container {
     transform: scale(1.05);
 }
 
+/* Heading and paragraph styling */
 .about-section h2 {
     font-size: 38px;
     margin-bottom: 10px;
@@ -594,7 +708,6 @@ body.dark-mode .chatbot-container {
     animation: fadeInUp 2s ease-in-out;
 }
 
-
 /* ================================================================= */
 /* === SKILL SECTION === */
 /* ================================================================= */
@@ -608,7 +721,7 @@ body.dark-mode .chatbot-container {
     color: white;
 }
 
-/* Gradient animation */
+/* Gradient animation keyframes */
 @keyframes gradientMove {
     0% {
         background-position: 0% 50%;
@@ -632,14 +745,14 @@ body.dark-mode .chatbot-container {
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
 }
 
-/* Skills Grid */
+/* Skills Grid layout */
 .grid-skills {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
 }
 
-/* Skill Boxes */
+/* Individual skill box styling */
 .skill-box {
     background: linear-gradient(135deg, #6a11cb, #2575fc);
     color: white;
@@ -653,14 +766,14 @@ body.dark-mode .chatbot-container {
     animation: floatSkill 3s ease-in-out infinite;
 }
 
-/* Hover animation */
+/* Hover animation for skill boxes */
 .skill-box:hover {
     transform: translateY(-8px) scale(1.05);
     background: linear-gradient(135deg, #ff7e5f, #feb47b);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 
-/* Floating effect */
+/* Floating effect animation */
 @keyframes floatSkill {
 
     0%,
@@ -683,7 +796,7 @@ body.dark-mode .chatbot-container {
     background: #e68900;
 }
 
-/* Responsive */
+/* Responsive grid for skills */
 @media (max-width: 992px) {
     .grid-skills {
         grid-template-columns: repeat(2, 1fr);
@@ -829,6 +942,7 @@ body.dark-mode .chatbot-container {
 /* === PROJECTS SECTION === */
 /* ================================================================= */
 
+/* Main projects section styling */
 .projects-section {
     padding: 100px 30px;
     background: linear-gradient(to right, #1f1c2c, #928dab);
@@ -836,12 +950,22 @@ body.dark-mode .chatbot-container {
     position: relative;
 }
 
+/* Glow animation for project heading */
 @keyframes glow {
-    0% { text-shadow: 0 0 10px #0ff, 0 0 20px #f0f; }
-    50% { text-shadow: 0 0 20px #f0f, 0 0 40px #0ff; }
-    100% { text-shadow: 0 0 10px #0ff, 0 0 30px #0ff; }
+    0% {
+        text-shadow: 0 0 10px #0ff, 0 0 20px #f0f;
+    }
+
+    50% {
+        text-shadow: 0 0 20px #f0f, 0 0 40px #0ff;
+    }
+
+    100% {
+        text-shadow: 0 0 10px #0ff, 0 0 30px #0ff;
+    }
 }
 
+/* Project heading styling */
 .project-heading {
     text-align: center;
     color: #fff;
@@ -852,11 +976,13 @@ body.dark-mode .chatbot-container {
     cursor: pointer;
 }
 
+/* Hover effect for project heading */
 .project-heading:hover {
     transform: scale(1.1);
     color: #ff0;
 }
 
+/* Projects container layout */
 .projects-container {
     display: flex;
     justify-content: center;
@@ -864,6 +990,7 @@ body.dark-mode .chatbot-container {
     flex-wrap: wrap;
 }
 
+/* Individual project box styling */
 .project-box {
     display: inline-block;
     padding: 0;
@@ -879,11 +1006,13 @@ body.dark-mode .chatbot-container {
     position: relative;
 }
 
+/* Hover effect for project box */
 .project-box:hover {
     transform: scale(1.05);
     box-shadow: 0 0 35px #0ff, 0 0 60px #f0f;
 }
 
+/* Project title styling */
 .project-title {
     text-align: center;
     margin-top: 10px;
@@ -893,11 +1022,13 @@ body.dark-mode .chatbot-container {
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.project-box:hover + .project-title {
+/* Hover effect for project title when hovering over the box */
+.project-box:hover+.project-title {
     color: #ff0;
     transform: scale(1.1);
 }
 
+/* Link icon on project box */
 .project-link {
     position: absolute;
     top: 10px;
@@ -918,6 +1049,7 @@ body.dark-mode .chatbot-container {
 
 
 /* === NOTEBOOK STYLES === */
+/* Main notebook popup container */
 .notebook {
     display: none;
     position: fixed;
@@ -935,11 +1067,20 @@ body.dark-mode .chatbot-container {
     animation: openBook 1s ease forwards;
 }
 
+/* Opening book animation */
 @keyframes openBook {
-    from { transform: scaleX(0) translate(-50%, -50%); opacity: 0; }
-    to { transform: scaleX(1) translate(-50%, -50%); opacity: 1; }
+    from {
+        transform: scaleX(0) translate(-50%, -50%);
+        opacity: 0;
+    }
+
+    to {
+        transform: scaleX(1) translate(-50%, -50%);
+        opacity: 1;
+    }
 }
 
+/* Container for notebook pages */
 .notebook .pages {
     width: 100%;
     height: 100%;
@@ -947,6 +1088,7 @@ body.dark-mode .chatbot-container {
     transition: transform 0.8s ease;
 }
 
+/* Individual notebook page styling */
 .notebook-page {
     flex: 0 0 100%;
     padding: 40px;
@@ -975,6 +1117,7 @@ body.dark-mode .chatbot-container {
     color: #fff;
 }
 
+/* Close button for notebook */
 .close-btn {
     position: absolute;
     top: 10px;
@@ -988,7 +1131,9 @@ body.dark-mode .chatbot-container {
     color: white;
 }
 
-.prev-btn, .next-btn {
+/* Previous and next page buttons */
+.prev-btn,
+.next-btn {
     bottom: 20px;
     background: #222;
     border: 1px solid white;
@@ -1000,9 +1145,15 @@ body.dark-mode .chatbot-container {
     color: white;
 }
 
-.prev-btn { left: 20px; }
-.next-btn { right: 20px; }
+.prev-btn {
+    left: 20px;
+}
 
+.next-btn {
+    right: 20px;
+}
+
+/* Image styling inside notebook pages */
 .notebook-image {
     display: block;
     margin: 0 auto 20px auto;
@@ -1037,6 +1188,7 @@ body.dark-mode .chatbot-container {
 /* === EDUCATION SECTION === */
 /* ================================================================= */
 
+/* Education section background gradient animation */
 .education-section {
     background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a1fdaf, #9fdd88);
     background-size: 500% 500%;
@@ -1048,12 +1200,27 @@ body.dark-mode .chatbot-container {
     overflow: hidden;
 }
 
+/* Keyframes for gradient shift animation */
 @keyframes eduGradientShift {
-    0% { background-position: 0% 50%; }
-    25% { background-position: 50% 100%; }
-    50% { background-position: 100% 50%; }
-    75% { background-position: 50% 0%; }
-    100% { background-position: 0% 50%; }
+    0% {
+        background-position: 0% 50%;
+    }
+
+    25% {
+        background-position: 50% 100%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    75% {
+        background-position: 50% 0%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .education-section h2 {
@@ -1065,11 +1232,12 @@ body.dark-mode .chatbot-container {
     color: #444;
 }
 
+/* Education card styling */
 .edu-card {
     background: white;
     border-radius: 14px;
     padding: 25px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     margin: 20px auto;
     max-width: 700px;
     animation: fadeInCard 1s ease-in-out;
@@ -1077,20 +1245,31 @@ body.dark-mode .chatbot-container {
     transition: transform 0.3s ease;
 }
 
+/* Hover effect for education cards */
 .edu-card:hover {
     transform: scale(1.03);
 }
 
+/* Keyframes for fade-in card animation */
 @keyframes fadeInCard {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* POPUP */
+/* Education POPUP */
 .edu-popup {
     position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     background: rgba(10, 10, 10, 0.7);
     display: none;
     align-items: center;
@@ -1108,9 +1287,17 @@ body.dark-mode .chatbot-container {
     position: relative;
 }
 
+/* Keyframes for zoom-in animation */
 @keyframes zoomIn {
-    from { transform: scale(0.5); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .edu-popup-content h3 {
@@ -1129,6 +1316,7 @@ body.dark-mode .chatbot-container {
     margin: 6px 0;
 }
 
+/* Close button for popup */
 .popup-close {
     position: absolute;
     top: 12px;
@@ -1140,6 +1328,7 @@ body.dark-mode .chatbot-container {
     color: #333;
 }
 
+/* Gallery of images inside the popup */
 .edu-gallery {
     display: flex;
     gap: 12px;
@@ -1152,7 +1341,7 @@ body.dark-mode .chatbot-container {
     height: 120px;
     object-fit: cover;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
 }
 
@@ -1163,8 +1352,10 @@ body.dark-mode .chatbot-container {
 /* ==== ENLARGED IMAGE POPUP STYLES ==== */
 #imagePopup {
     position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     background: rgba(0, 0, 0, 0.8);
     display: none;
     align-items: center;
@@ -1196,7 +1387,7 @@ body.dark-mode .chatbot-container {
     border: none;
     border-radius: 50%;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes rotateZoomIn {
@@ -1204,6 +1395,7 @@ body.dark-mode .chatbot-container {
         transform: scale(0.3) rotateY(0deg);
         opacity: 0;
     }
+
     to {
         transform: scale(1) rotateY(360deg);
         opacity: 1;
@@ -1211,12 +1403,11 @@ body.dark-mode .chatbot-container {
 }
 
 
-
 /* ================================================================= */
 /* === Certificate SECTION === */
 /* ================================================================= */
 
-
+/* Certificates section background gradient */
 
 /* Certificates Section */
 .certificates-section {
@@ -1227,6 +1418,7 @@ body.dark-mode .chatbot-container {
     color: white;
 }
 
+/* Heading styling */
 .certificates-heading {
     text-align: center;
     font-size: 2.5rem;
@@ -1274,42 +1466,6 @@ body.dark-mode .chatbot-container {
     }
 }
 
-/* Certificate Popup */
-.certificate-popup {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.7);
-    justify-content: center;
-    align-items: center;
-    z-index: 1200;
-    animation: fadeInPopup 0.3s ease;
-}
-
-.certificate-popup-content {
-    background: white;
-    padding: 15px;
-    border-radius: 15px;
-    max-width: 90%;
-    max-height: 90%;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-    animation: scaleUp 0.4s ease;
-}
-
-.certificate-popup-content img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-}
-
-.close-popup {
-    float: right;
-    font-size: 22px;
-    cursor: pointer;
-    color: #333;
-}
-
-
 /* Certificate Popup (Full screen view) */
 .certificate-popup {
     display: none;
@@ -1344,10 +1500,13 @@ body.dark-mode .chatbot-container {
     align-self: flex-end;
 }
 
-/* PDF file inside popup */
+/* Image inside popup */
 #certificate-file {
     flex: 1;
     border-radius: 8px;
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 /* Animations */
@@ -1373,10 +1532,13 @@ body.dark-mode .chatbot-container {
     }
 }
 
+
+
 /* ================================================================= */
 /* === CONTACT SECTION === */
 /* ================================================================= */
 
+/* Main contact section styling */
 .contact-section {
     padding: 60px 30px;
     color: #111;
@@ -1400,6 +1562,7 @@ body.dark-mode .chatbot-container {
     color: #333;
 }
 
+/* Container for contact information cards */
 .contact-info-container {
     display: flex;
     justify-content: center;
@@ -1408,17 +1571,19 @@ body.dark-mode .chatbot-container {
     margin-bottom: 40px;
 }
 
+/* Individual contact card styling */
 .contact-card {
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     will-change: transform;
     cursor: pointer;
     background: #fff;
     border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     padding: 20px;
     min-width: 250px;
 }
 
+/* Hover effect for contact cards */
 .contact-card:hover {
     transform: translateY(-8px) scale(1.03);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
@@ -1428,6 +1593,7 @@ body.dark-mode .chatbot-container {
     font-size: 24px;
 }
 
+/* Contact form styling */
 .contact-form {
     max-width: 600px;
     margin: auto;
@@ -1455,7 +1621,7 @@ body.dark-mode .chatbot-container {
     cursor: pointer;
 }
 
-/* POPUP EMOJI */
+/* POPUP EMOJI animation */
 .popup-emoji {
     position: fixed;
     font-size: 48px;
@@ -1463,18 +1629,32 @@ body.dark-mode .chatbot-container {
     z-index: 9999;
     pointer-events: none;
 }
+
 @keyframes bouncePop {
-    0% { opacity: 0; transform: scale(0.5) translateY(-50px); }
-    50% { opacity: 1; transform: scale(1.2) translateY(-100px); }
-    100% { opacity: 0; transform: scale(0.2) translateY(-150px); }
+    0% {
+        opacity: 0;
+        transform: scale(0.5) translateY(-50px);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2) translateY(-100px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.2) translateY(-150px);
+    }
 }
 
 /* THANK YOU POPUP */
 .popup-overlay {
     display: none;
     position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(6px);
     z-index: 9999;
@@ -1482,7 +1662,8 @@ body.dark-mode .chatbot-container {
 
 .popup-container {
     position: absolute;
-    top: 50%; left: 50%;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%) scale(0.9);
     background: #1a1a1a;
     color: #fff;
@@ -1504,12 +1685,13 @@ body.dark-mode .chatbot-container {
     max-height: 250px;
     border-radius: 12px;
     object-fit: cover;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 .close-btn {
     position: absolute;
-    top: 12px; right: 18px;
+    top: 12px;
+    right: 18px;
     font-size: 22px;
     color: #fff;
     cursor: pointer;
@@ -1528,6 +1710,7 @@ body.dark-mode .chatbot-container {
         opacity: 0;
         transform: translate(-50%, -60%) scale(0.8);
     }
+
     100% {
         opacity: 1;
         transform: translate(-50%, -50%) scale(1);
@@ -1561,9 +1744,17 @@ body.dark-mode .chatbot-container {
 }
 
 @keyframes bounceUp {
-    0%   { transform: translateY(0); }
-    50%  { transform: translateY(-6px); }
-    100% { transform: translateY(0); }
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
 }
 
 /* ================================================================= */
@@ -1609,11 +1800,10 @@ footer {
     border-radius: 50%;
     padding: 10px 14px;
     cursor: pointer;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     transition: 0.3s ease;
 }
 
 .footer-scroll-btn:hover {
     transform: scale(1.1);
 }
-
